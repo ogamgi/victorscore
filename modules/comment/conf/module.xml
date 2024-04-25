@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<grants />
+	<actions>
+		<action name="dispCommentDeclare" type="view" permission="member" />
+		
+		<action name="getCommentMenu" type="model" />
+		<action name="getCommentVotedMemberList" type="model" permission="root" />
+		
+		<action name="procCommentVoteUp" type="controller" />
+		<action name="procCommentVoteUpCancel" type="controller" />
+		<action name="procCommentVoteDown" type="controller" />
+		<action name="procCommentVoteDownCancel" type="controller" />
+		<action name="procCommentDeclare" type="controller" permission="member" />
+		<action name="procCommentGetList" type="controller" permission="manager" check_type="comment" check_var="comment_srls" />
+		<action name="procCommentInsertModuleConfig" type="controller" permission="manager" check_var="target_module_srl" ruleset="insertCommentModuleConfig" />
+		
+		<action name="dispCommentAdminList" type="view" admin_index="true" menu_name="comment" menu_index="true" />
+		<action name="dispCommentAdminDeclared" type="view" menu_name="comment" />
+		<action name="dispCommentAdminDeclaredLogByCommentSrl" type="view" menu_name="comment" />
+		
+		<action name="procCommentAdminChangeStatus" type="controller"/>
+		<action name="procCommentAdminChangePublishedStatusChecked" type="controller" />
+		<action name="procCommentAdminCancelDeclare" type="controller" />
+		<action name="procCommentAdminAddCart" type="controller" permission="manager" check_type="comment" check_var="comment_srl" />
+		<action name="procCommentAdminDeleteChecked" type="controller" permission="manager" check_type="comment" check_var="cart" ruleset="deleteChecked" />
+		<action name="procCommentAdminMoveToTrash" type="controller" permission="manager" check_type="comment" check_var="comment_srl" />
+	</actions>
+	<menus>
+		<menu name="comment">
+			<title xml:lang="en">Comment</title>
+			<title xml:lang="ko">댓글</title>
+			<title xml:lang="zh-CN">Comment</title>
+			<title xml:lang="jp">コメント</title>
+			<title xml:lang="es">Comment</title>
+			<title xml:lang="ru">Comment</title>
+			<title xml:lang="fr">Comment</title>
+			<title xml:lang="zh-TW">回覆</title>
+			<title xml:lang="vi">Comment</title>
+			<title xml:lang="mn">Comment</title>
+			<title xml:lang="tr">Comment</title>
+		</menu>
+	</menus>
+</module>

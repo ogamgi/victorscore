@@ -1,0 +1,73 @@
+<div class="subject-zone margin-top-large">
+	<div cond="$module_info->use_category == 'Y'" class="desc">
+		<a href="{getUrl('category', $oDocument->get('category_srl'), 'document_srl', '')}">
+			<div class="text">{$category_list[$oDocument->get('category_srl')]->title}</div>
+		</a>
+	</div>
+	<div class="subject">
+		<a href="{$oDocument->getUrl()}">
+			<div class="text">{$oDocument->getTitle()}</div>
+		</a>
+	</div>
+	<ul class="meta-list">
+		<li>
+			<div class="key">
+				<div class="avatar"></div>
+			</div>
+			<div class="value">
+				<div class="text">{$oDocument->getNickName()}</div>
+			</div>
+		</li>
+		<li class="separate"><div class="text">·</div></li>
+		<li>
+			<div class="key">
+				<div class="text">{lang('readed_count')}</div>
+			</div>
+			<div class="value">
+				<div class="text">{$oDocument->get('readed_count')}</div>
+			</div>
+		</li>
+		<li class="separate"><div class="text">·</div></li>
+		<li>
+			<div class="value">
+				<div class="text">{getModel('zcommon')->getDispTime($oDocument->getRegdate('YmdHis'))}</div>
+			</div>
+		</li>
+	</ul>
+</div>
+<div cond="$oDocument->isExtraVarsExists() && $oDocument->isAccessible()" class="form-zone margin-top">
+	<ul>
+		<li loop="$oDocument->getExtraVars() => $key, $value">
+			<div class="key">
+				<div class="text">{$value->name}</div>
+			</div>
+			<div class="value">
+				<div class="text">{$value->getValueHTML()}</div>
+			</div>
+		</li>
+	</ul>
+</div>
+<div class="contents-zone margin-top-small">
+	<div class="contents">
+		<div class="text">
+			{$oDocument->getContent(false)}
+		</div>
+	</div>
+	<div class="button-zone">
+		<div>
+			<a href="{getUrl('document_srl','')}" class="button inline border">
+				<div class="text">{lang('cmd_prev')}</div>
+			</a>
+		</div>
+		<div cond="$oDocument->isEditable()" class="right">
+			<a href="{getUrl('act','dispBoardDelete','document_srl',$oDocument->document_srl,'comment_srl','')}" class="button inline border gray">
+				<div class="text">{$lang->cmd_delete}</div>
+			</a>
+			<a href="{getUrl('act', 'dispBoardWrite', 'document_srl', $oDocument->document_srl, 'comment_srl', '')}" class="button inline border red">
+				<div class="text">{lang('cmd_modify')}</div>
+			</a>
+		</div>
+	</div>
+</div>
+
+<include target="_comment.html" />

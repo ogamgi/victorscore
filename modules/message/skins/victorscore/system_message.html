@@ -1,0 +1,71 @@
+{@
+    Context::addHtmlHeader('<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">');
+	Context::set('layout', 'none');
+	$referer = getCurrentPageUrl();
+}
+
+<!--@if (empty($system_message_detail))-->
+	{@
+		$system_message_detail = $system_message;
+		$system_message = lang('msg_error_occured');
+	}
+<!--@end-->
+
+<load target="../../../../assets/css/gmarketsans.css" index="0" />
+<load target="../../../../assets/css/esamanru.css" index="0" />
+<load target="../../../../assets/css/xeicon.min.css" index="0" />
+<load target="../../../../assets/css/reset.css" index="0" />
+<load target="../../../../assets/css/var.css" index="0" />
+<load target="../../../../assets/css/common.css" index="1" />
+
+<main class="message-wrap">
+	<a href="#" onclick="return false;" class="lang-toggle-button">
+		<h6 class="active"|cond="Context::getLangType() === 'ko'" data-lang_type="ko">KOR</h6>
+		<div class="separate">/</div>
+		<h6 class="active"|cond="Context::getLangType() === 'en'" data-lang_type="en">ENG</h6>
+	</a>
+	<h1 class="margin-top-smaller font-bold-point">{lang('notify')}</h1>
+	<div class="title">
+		<div class="text">{$system_message}</div>
+	</div>
+	<div class="desc">
+		{$system_message_detail}
+	</div>
+	<div cond="$system_message_location == 'email'" class="desc font-bold color-black">
+		<a href="mailto:contact@victorscore.com">contact@victorscore.com</a>
+	</div>
+	<ul cond="!$is_logged" class="link-zone">
+		<li>
+			<a href="{getUrl('', 'act', 'dispMemberLoginForm', 'referer', $referer)}" class="button larger border">
+				<div class="text">{lang('$user_lang->userLang20221102121118038')}</div>
+			</a>
+		</li>
+		<li>
+			<a href="#" onclick="history.back(); return false;" class="button larger">
+				<div class="text">{lang('$user_lang->userLang20221102235753066')}</div>
+			</a>
+		</li>
+		<li>
+			<a href="{getUrl('')}" class="button larger red">
+				<div class="text">{lang('$user_lang->userLang20221104035601089')}</div>
+			</a>
+		</li>
+	</ul>
+	<ul cond="$is_logged" class="link-zone">
+		<li>
+			<a href="{getUrl('', 'act', 'dispMemberLogout')}" class="button larger border">
+				<div class="text">{lang('$user_lang->userLang20221103170542092')}</div>
+			</a>
+		</li>
+		<li>
+			<a href="#" onclick="history.back(); return false;" class="button larger">
+				<div class="text">{lang('$user_lang->userLang20221102235753066')}</div>
+			</a>
+		</li>
+		<li>
+			<a href="{getUrl('')}" class="button larger red">
+				<div class="text">{lang('$user_lang->userLang20221104035601089')}</div>
+			</a>
+		</li>
+	</ul>
+</main>

@@ -1,0 +1,180 @@
+@charset "utf-8";
+/*************/
+/* Header */
+/*************/
+.header-wrap {
+    position: relative;
+    min-height: var(--size-large);
+    z-index: 100;
+}
+/* main menu zone */
+.header-wrap .mainmenu-zone {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: var(--size-large);
+    border-bottom: var(--border-default);
+    background-color: var(--color-black);
+}
+.header-wrap .mainmenu-zone .logo {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+}
+.header-wrap .mainmenu-zone .logo > img {
+    position: relative;
+    height: 16px;
+}
+.header-wrap .mainmenu-zone .menu-area {
+    display: flex;
+    flex-flow: row nowrap;
+    position: relative;
+    top: 0.1rem;
+    margin-left: var(--size-medium);
+}
+.header-wrap .mainmenu-zone .menu-area > li {
+    display: flex;
+    position: relative;
+    margin-left: var(--size-medium);
+    font-family: var(--font-regular-point);
+    font-size: var(--font-large);
+    color: var(--color-gray);
+}
+.header-wrap .mainmenu-zone .menu-area > li:first-child {
+    margin-left: 0px;
+}
+.header-wrap .mainmenu-zone .menu-area > li.active {
+    color: var(--color-white);
+}
+.header-wrap .mainmenu-zone .menu-button {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--font-biggest);
+    color: var(--color-white);
+}
+.header-wrap .mainmenu-zone .link-area {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    position: relative;
+    top: 0.1rem;
+}
+.header-wrap .mainmenu-zone .link-area > li {
+    display: flex;
+    flex-flow: row nowrap;
+    color: var(--color-white);
+}
+.header-wrap .mainmenu-zone .link-area > li.separate {
+    width: var(--size-smallest);
+    font-size: 0px;
+}
+.header-wrap .mainmenu-zone .link-area > li.separate.large {
+    width: var(--size-small);
+}
+.header-wrap .mainmenu-zone .link-area > li,
+.header-wrap .mainmenu-zone .link-area > li > a {
+    font-size: var(--font-small);
+}
+.header-wrap .mainmenu-zone .lang-toggle-button > h6:not(.active) {
+    color: var(--color-gray);
+}
+/*************/
+/* Footer */
+/*************/
+.footer-wrap {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    padding-bottom: var(--size-medium);
+}
+.footer-wrap .footer-menu {
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+}
+.footer-wrap .footer-menu > li {
+    font-size: var(--font-small);
+}
+.footer-wrap .footer-menu > li.separate {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    margin: 0px var(--size-small);
+}
+.footer-wrap .footer-menu > li.separate > div {
+    width: 1px;
+    height: var(--font-small);
+    font-size: 0px;
+    background-color: var(--color-light-gray);
+}
+.footer-wrap .footer-copy {
+    font-family: var(--font-bold);
+    font-size: var(--font-small);
+    text-align: center;
+}
+/*************/
+/* Main */
+/*************/
+.main-wrap {
+    position: relative;
+    padding: var(--size-large) 0px calc(var(--size-large) * 2);
+}
+.main-wrap .center-zone {
+    position: relative;
+}
+.main-wrap .top-button {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+.main-wrap .section {
+    margin-top: var(--size-large);
+}
+.main-wrap .section.center {
+    margin-left: auto;
+    margin-right: auto;
+    width: var(--size-center-min);
+}
+/* process */
+.process-group {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    font-size: var(--font-larger);
+    color: var(--color-gray);
+}
+.process-group .arrow {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    margin: 0px var(--size-smallest);
+}
+.process-group .active {
+    font-family: var(--font-bold);
+    color: var(--color-black);
+}
+/* form zone */
+.form-zone .separate {
+    height: var(--size-small);
+    font-size: 0px;
+}
+.form-zone > ul > li.match {
+    padding: var(--size-small);
+    border: var(--border-black);
+}
+.form-zone > ul > li.match .input-list {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+}
+.form-zone > ul > li.match .input-list > li.separate {
+    width: var(--size-smaller);
+    font-size: 0px;
+}
+.form-zone > ul > li.match .input-box input {
+    width: 100%;
+}

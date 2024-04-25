@@ -1,0 +1,132 @@
+@charset "utf-8";
+/*************/
+/* 가로 1310 */
+/*************/
+@media (max-width: 1310px) {
+    /*************/
+    /* Common */
+    /*************/
+    /* center zone */
+    .center-zone {
+        padding-left: var(--size-smaller);
+        padding-right: var(--size-smaller);
+        width: 100%;
+    }
+}
+/*************/
+/* 가로 1210 */
+/*************/
+@media (max-width: 1210px) {
+
+}
+/*************/
+/* 가로 1010 */
+/*************/
+@media (max-width: 1010px) {
+    /* list */
+    .list-zone.three > li,
+    .list-zone.four > li {
+        width: calc(50% - var(--size-small));
+    }
+}
+/*************/
+/* 가로 810 */
+/*************/
+@media (max-width: 810px) {
+    /* list */
+    .list-zone.two > li,
+    .list-zone.three > li,
+    .list-zone.four > li {
+        width: calc(100% - var(--size-small));
+    }
+}
+/*************/
+/* 가로 600 */
+/*************/
+@media (max-width: 600px) {
+    /* generic */
+    h1 {
+        font-size: var(--font-bigger);
+    }
+    h2 {
+        font-size: var(--font-large);
+    }
+    h3 {
+        font-size: var(--font-larger);
+    }
+    h4 {
+        font-size: var(--font-large);
+    }
+    h5 {
+        font-size: var(--font-medium);
+    }
+    h6 {
+        font-size: var(--font-smaller);
+    }
+    /* margin */
+    .margin-top-smallest {
+        margin-top: var(--size-tiny) !important;
+    }
+    .margin-top-smaller {
+        margin-top: var(--size-smallest) !important;
+    }
+    .margin-top-small {
+        margin-top: var(--size-smaller) !important;
+    }
+    .margin-top {
+        margin-top: var(--size-small) !important;
+    }
+    .margin-top-large {
+        margin-top: var(--size-medium) !important;
+    }
+    .margin-top-larger {
+        margin-top: var(--size-large) !important;
+    }
+    .margin-bottom-smallest {
+        margin-bottom: var(--size-tiny) !important;
+    }
+    .margin-bottom-smaller {
+        margin-bottom: var(--size-smallest) !important;
+    }
+    .margin-bottom-small {
+        margin-bottom: var(--size-smaller) !important;
+    }
+    .margin-bottom {
+        margin-bottom: var(--size-small) !important;
+    }
+    .margin-bottom-large {
+        margin-bottom: var(--size-larger) !important;
+    }
+    /* 설명을 위한 컨텐트 박스 */
+    .content-box > div {
+        flex-flow: column;
+        align-items: flex-start;
+    }
+    /* button */
+    /* button zone */
+    .button-zone {
+        margin-top: var(--size-medium);
+    }
+    /* popup */
+    .popup-wrap .popup {
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        transform: none;
+    }
+    .popup-wrap .popup .contents {
+        width: 100%;
+    }
+    /* tab menu */
+    .tab-menu > li > a {
+        font-size: var(--font-large);
+    }
+    .tab-menu.box > li > a {
+        padding-top: var(--size-smallest);
+        padding-bottom: var(--size-smallest);
+    }
+    /* pagination */
+    .pagination {
+        margin: calc(var(--size-small) + (-1 * var(--size-tiny))) calc(-1 * var(--size-tiny)) calc(-1 * var(--size-tiny)) calc(-1 * var(--size-tiny))
+    }
+}

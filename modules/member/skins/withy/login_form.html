@@ -1,0 +1,105 @@
+<include target="./_header.html" />
+
+<div class="logo-zone">
+    <a href="#" onclick="return false;" class="lang-toggle-button">
+		<h6 class="active"|cond="Context::getLangType() === 'ko'" data-lang_type="ko">KOR</h6>
+		<div class="separate">/</div>
+		<h6 class="active"|cond="Context::getLangType() === 'en'" data-lang_type="en">ENG</h6>
+	</a>
+    <div class="margin-top-small"><img src="{$assets_location}/images/logo.svg" /></div>
+</div>
+<section class="login-section margin-top">
+    <ul class="tab-menu box">
+        <li class="active">
+            <a href="#" onclick="return false;">
+                <div class="text">{lang('$user_lang->userLang20221103144703097')}</div>
+            </a>
+        </li>
+        <li>
+            <a href="#" onclick="alert(xe.msg_prepare); return false;">
+                <div class="text">{lang('$user_lang->userLang20221103144710057')}</div>
+            </a>
+        </li>
+    </ul>
+    <form action="./" method="post" class="form-zone margin-top">
+        <input type="hidden" name="act" value="procMemberLogin" />
+        <input type="hidden" name="success_return_url" value="{$referer}" />
+        <ul>
+            <li class="input">
+                <div class="key">
+                    <div class="text">{lang('user_id')}/{lang('email')}</div>
+                </div>
+                <div class="value">
+                    <div class="input-box">
+                        <input type="text" name="user_id" placeholder="{lang('$user_lang->userLang20221103144951000')}" required="required" />
+                    </div>
+                </div>
+            </li>
+            <li class="input">
+                <div class="key">
+                    <div class="text">{lang('password')}</div>
+                </div>
+                <div class="value">
+                    <div class="input-box">
+                        <input type="password" name="password" placeholder="{lang('msg_input_password')}" required="required" />
+                        <a href="#" onclick="return false;" class="icon-right" id="PasswordShowButton">
+                            <i class="xi-eye-off"></i>
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li class="input">
+                <div class="value">
+                    <ul class="check-box default">
+                        <li>
+                            <input type="checkbox" name="keep_signed" value="Y" id="AutoLogin" />
+                            <label for="AutoLogin">
+                                <i class="xi-check-square icon"></i>
+                                <i class="xi-checkbox-blank icon"></i>
+                                <div class="text">{lang('$user_lang->userLang20221103145041068')}</div>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+        <div class="button-zone">
+            <button type="submit" class="button larger">
+                <div class="text">{lang('$user_lang->userLang20221102121118038')}</div>
+            </button>
+        </div>
+    </form>
+</section>
+<section class="link-section margin-top-small">
+    <ul class="space-between">
+        <li>
+            <a href="{getUrl('', 'act', 'dispMemberFindAccount', 'referer', $referer)}" class="link">
+                <div class="text">{lang('$user_lang->userLang20221102121221067')}</div>
+                <div class="icon-right"><i class="xi-angle-right icon"></i></div>
+            </a>
+        </li>
+        <li>
+            <a href="{getUrl('', 'act', 'dispMemberSignUpForm', 'referer', $referer)}" class="link">
+                <div class="text">{lang('$user_lang->userLang20221102121157032')}</div>
+                <div class="icon-right"><i class="xi-angle-right icon"></i></div>
+            </a>
+        </li>
+    </ul>
+</section>
+
+<include target="./_footer.html" />
+
+<script>
+    $('#PasswordShowButton').on('click', function() {
+        var $password = $(this).parent().find('input');
+        var $icon = $(this).find('i');
+
+        if ($password.attr('type') == 'password') {
+            $password.attr('type', 'text');
+            $icon.attr('class', $icon.attr('class', ).replace('-off', ''));
+        } else {
+            $password.attr('type', 'password');
+            $icon.attr('class', $icon.attr('class') + '-off');
+        }
+    });
+</script>

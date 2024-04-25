@@ -1,0 +1,49 @@
+<include target="../../../zuser/skins/default/_header.html" />
+
+<section cond="$oDocument->isExists()" class="main-section small">
+	<div class="title-zone">
+		<div class="title text">
+			{sprintf($lang->comfirm_act_msg, $lang->document, $lang->cmd_delete, $lang->msg_rul)}
+		</div>
+	</div>
+	<form action="./" method="get" onsubmit="return procFilter(this, delete_document)" class="margin-top">
+		<input type="hidden" name="mid" value="{$mid}" />
+		<input type="hidden" name="page" value="{$page}" />
+		<input type="hidden" name="document_srl" value="{$document_srl}" />
+		<input type="hidden" name="success_return_url" value="{getUrl('act', '', document_srl, '')}" />
+		<div class="form-zone">
+			<ul>
+				<li>
+					<div class="key">
+						<div class="text">{$lang->title}</div>
+					</div>
+					<div class="value">
+						<div class="box text">{$oDocument->getTitle()}</div>
+					</div>
+				</li>
+				<li>
+					<div class="key">
+						<div class="text">{$lang->author}</div>
+					</div>
+					<div class="value">
+						<div class="box text">{$oDocument->get('email_address')}</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="button-zone">
+            <div>
+                <button type="button" onclick="history.back()" class="button inline">
+					<div class="text">{$lang->cmd_cancel}</div>
+				</button>
+            </div>
+            <div>
+				<button type="submit" class="button inline red">
+					<div class="text">{$lang->cmd_delete}</div>
+				</button>
+            </div>
+        </div>
+	</form>
+</section>
+
+<include target="../../../zuser/skins/default/_aside.html" />

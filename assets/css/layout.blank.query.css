@@ -1,0 +1,28 @@
+@charset "utf-8";
+/*************/
+/* 가로 600 */
+/*************/
+@media (max-width: 600px) {
+    /* header */
+    .header-wrap {
+        height: var(--size-large);
+    }
+    /* footer */
+    .footer-wrap {
+        padding-left: var(--size-smaller);
+        padding-right: var(--size-smaller);
+    }
+    .footer-wrap .footer-menu > li.separate {
+        margin-left: var(--size-smallest);
+        margin-right: var(--size-smallest);
+    }
+    /* main */
+    .main-wrap {
+        margin-top: var(--size-large);
+        padding-bottom: var(--size-large);
+    }
+    /* login */
+    .login-section {
+        padding-top: var(--size-smallest);
+    }
+}

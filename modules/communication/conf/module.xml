@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+	<grants />
+	<actions>
+		<action name="dispCommunicationMessages" type="view" permission="member" meta-noindex="true" />
+		<action name="dispCommunicationSendMessage" type="view" permission="member" meta-noindex="true" />
+		<action name="dispCommunicationNewMessage" type="view" permission="member" meta-noindex="true" />
+		<action name="dispCommunicationFriend" type="view" permission="member" meta-noindex="true" />
+		<action name="dispCommunicationAddFriend" type="view" permission="member" meta-noindex="true" />
+		<action name="dispCommunicationAddFriendGroup" type="view" permission="member" meta-noindex="true" />
+		<action name="dispCommunicationMessageBoxList" type="mobile" permission="member" meta-noindex="true" />
+		
+		<action name="procCommunicationUpdateAllowMessage" type="controller" permission="member" />
+		<action name="procCommunicationSendMessage" type="controller" permission="member" ruleset="sendMessage" />
+		<action name="procCommunicationStoreMessage" type="controller" permission="member" />
+		<action name="procCommunicationDeleteMessage" type="controller" permission="member" />
+		<action name="procCommunicationDeleteMessages" type="controller" permission="member" />
+		<action name="procCommunicationAddFriend" type="controller" permission="member" ruleset="addFriend" />
+		<action name="procCommunicationAddFriendGroup" type="controller" permission="member" ruleset="addFriendGroup" />
+		<action name="procCommunicationMoveFriend" type="controller" permission="member" ruleset="deleteCheckedFriend" />
+		<action name="procCommunicationDeleteFriend" type="controller" permission="member" ruleset="deleteCheckedFriend" />
+		<action name="procCommunicationDeleteFriendGroup" type="controller" permission="member" />
+		<action name="procCommunicationRenameFriendGroup" type="controller" permission="member" />
+		
+		<action name="dispCommunicationAdminConfig" type="view" admin_index="true" />
+		<action name="getCommunicationAdminColorset" type="model" />
+		<action name="procCommunicationAdminInsertConfig" type="controller" ruleset="insertConfig" />
+	</actions>
+</module>

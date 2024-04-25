@@ -1,0 +1,60 @@
+<include target="./_header.html" />
+
+<div class="logo-zone">
+    <a href="#" onclick="return false;" class="lang-toggle-button">
+		<h6 class="active"|cond="Context::getLangType() === 'ko'" data-lang_type="ko">KOR</h6>
+		<div class="separate">/</div>
+		<h6 class="active"|cond="Context::getLangType() === 'en'" data-lang_type="en">ENG</h6>
+	</a>
+    <h1 class="margin-top-small"><img src="{$assets_location}/images/logo.svg" /></h1>
+</div>
+<section class="login-section margin-top">
+    <form action="./" method="post" enctype="multipart/form-data" class="form-zone">
+		<input type="hidden" name="act" value="procMemberFindAccount" />
+		<input type="hidden" name="xe_validator_id" value="modules/member/skins/1" />
+		<div class="title">{lang('member.cmd_find_member_account_with_email')}</div>
+        <ul>
+            <li class="input">
+                <div class="key">
+                    <div class="text">{lang('member.about_find_member_account')}</div>
+                </div>
+                <div class="value">
+                    <div class="input-box">
+                        <input type="email" name="email_address" placeholder="{lang('$user_lang->userLang20221103145917052')}" autocomplete="new-password" />
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="button-zone">
+            <button type="submit" class="button larger">
+                <div class="text">{lang('member.cmd_find_member_account')}</div>
+            </button>
+        </div>
+    </form>
+</section>
+<section class="login-section margin-top-large">
+    <form action="./" method="post" enctype="multipart/form-data" class="form-zone">
+		<input type="hidden" name="act" value="procMemberResendAuthMail" />
+		<input type="hidden" name="xe_validator_id" value="modules/member/skins/2" />
+		<div class="title">{lang('member.cmd_resend_auth_mail')}</div>
+        <ul>
+            <li class="input">
+                <div class="key">
+                    <div class="text">{lang('member.about_resend_auth_mail')}</div>
+                </div>
+                <div class="value">
+                    <div class="input-box">
+                        <input type="email" name="email_address" placeholder="{lang('$user_lang->userLang20221103145917052')}" autocomplete="new-password" />
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="button-zone">
+            <button type="submit" class="button larger">
+                <div class="text">{lang('member.cmd_resend_auth_mail')}</div>
+            </button>
+        </div>
+    </form>
+</section>
+
+<include target="./_footer.html" />

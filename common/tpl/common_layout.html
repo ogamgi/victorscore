@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="{$lang_type = Context::getLangType()}" class="xe-mobilelayout"|cond="$m">
+<head>
+
+<!-- META -->
+<meta charset="utf-8">
+<meta name="generator" content="Rhymix">
+<meta name="viewport" content="{config('mobile.viewport') ?? HTMLDisplayHandler::DEFAULT_VIEWPORT}" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<block loop="Context::getMetaTag() => $no, $val">
+<meta http-equiv="{$val['name']}"|cond="$val['is_http_equiv']" name="{$val['name']}"|cond="!$val['is_http_equiv']" content="{$val['content']}" />
+</block>
+<meta name="csrf-token" content="{($is_logged || ($act ?? '')) ? \Rhymix\Framework\Session::getGenericToken() : ''}" />
+
+<!-- TITLE -->
+<title>{Context::getBrowserTitle()}</title>
+
+<!-- CSS -->
+<block loop="Context::getCssFile(true) => $key, $css_file">
+<block cond="$css_file['targetie']"><!--[if {$css_file['targetie']}]><block cond="stripos($css_file['targetie'], 'gt') === 0"><!--></block></block>
+<link rel="stylesheet" href="{$css_file['file']}" media="{$css_file['media']}"|cond="$css_file['media'] != 'all'" />
+<block cond="$css_file['targetie']"><block cond="stripos($css_file['targetie'], 'gt') === 0"><!--</block><![endif]-->{"\n"}</block>
+</block>
+
+<!-- JS -->
+<block loop="Context::getJsFile('head', true) => $key, $js_file">
+<block cond="$js_file['targetie']"><!--[if {$js_file['targetie']}]><block cond="stripos($js_file['targetie'], 'gt') === 0"><!--></block></block>
+<script src="{$js_file['file']}"></script>
+<block cond="$js_file['targetie']"><block cond="stripos($js_file['targetie'], 'gt') === 0"><!--</block><![endif]-->{"\n"}</block>
+</block>
+
+<!-- RSS -->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="{$rss_url}" cond="isset($rss_url) && $rss_url" />
+<link rel="alternate" type="application/rss+xml" title="Site RSS" href="{$general_rss_url}" cond="isset($general_rss_url) && $general_rss_url" />
+<link rel="alternate" type="application/atom+xml" title="Atom" href="{$atom_url}" cond="isset($atom_url) && $atom_url" />
+<link rel="alternate" type="application/atom+xml" title="Site Atom" href="{$general_atom_url}" cond="isset($general_atom_url) && $general_atom_url" />
+
+<!-- ICONS AND OTHER LINKS -->
+<link cond="Context::getCanonicalURL()" rel="canonical" href="{Context::getCanonicalURL()}" />
+<link cond="$favicon_url" rel="shortcut icon" href="{$favicon_url}" />
+<link cond="$mobicon_url" rel="apple-touch-icon" href="{$mobicon_url}" />
+
+<!-- OTHER HEADERS -->
+<block loop="Context::getOpenGraphData() => $og_metadata">
+<meta property="{$og_metadata['property']}" content="{$og_metadata['content']}" />
+</block>
+{Context::getHtmlHeader()|noescape}
+</head>
+
+<!-- BODY START -->
+<body{Context::getBodyClass()|noescape}>
+	
+<!-- COMMON JS VARIABLES -->
+<script>
+	var default_url = "{\Rhymix\Framework\URL::encodeIdna(Context::getDefaultUrl(null, RX_SSL))}";
+	var current_url = "{\Rhymix\Framework\URL::encodeIdna($current_url)}";
+	var request_uri = "{\Rhymix\Framework\URL::encodeIdna($request_uri)}";
+	var current_lang = xe.current_lang = "{$lang_type}";
+	var current_mid = {json_encode(isset($mid) ? $mid : null)};
+	var http_port = {Context::get("_http_port") ?: 'null'};
+	var https_port = {Context::get("_https_port") ?: 'null'};
+	var enforce_ssl = {$site_module_info->security === 'always' ? 'true' : 'false'};
+	var cookies_ssl = {config('session.use_ssl_cookies') ? 'true' : 'false'};
+	var rewrite_level = {intval(\Rhymix\Framework\Router::getRewriteLevel())};
+	if (detectColorScheme) detectColorScheme();
+</script>
+
+<!-- PAGE CONTENT -->
+{Context::getBodyHeader()|noescape}
+{$content|noescape}
+{Context::getHtmlFooter()|noescape}
+
+<!-- ETC -->
+<div id="rhymix_waiting" class="wfsr" data-message="{$lang->msg_call_server}" cond="!$m"></div>
+<div id="rhymix_alert"></div>
+<div id="rhymix_debug_panel"></div>
+<div id="rhymix_debug_button"></div>
+
+<!-- BODY JS -->
+<block loop="Context::getJsFile('body', true) => $key, $js_file">
+<block cond="$js_file['targetie']"><!--[if {$js_file['targetie']}]></block>
+<script src="{$js_file['file']}"></script>
+<block cond="$js_file['targetie']"><![endif]-->{"\n"}</block>
+</block>
+
+</body>
+</html>

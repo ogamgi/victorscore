@@ -1,0 +1,163 @@
+<include target="./_header.html" />
+
+<div class="logo-zone">
+    <a href="#" onclick="return false;" class="lang-toggle-button">
+		<h6 class="active"|cond="Context::getLangType() === 'ko'" data-lang_type="ko">KOR</h6>
+		<div class="separate">/</div>
+		<h6 class="active"|cond="Context::getLangType() === 'en'" data-lang_type="en">ENG</h6>
+	</a>
+    <h1 class="margin-top-small">
+        <div class="text">{lang('$user_lang->userLang20221102121157032')}</div>
+    </h1>
+</div>
+<section class="join-section margin-top">
+    <form action="./" method="post" enctype="multipart/form-data" class="form-zone" id="JoinForm">
+        <input type="hidden" name="act" value="procMemberInsert" />
+		<input type="hidden" name="xe_validator_id" value="modules/member/skins" />
+		<input type="hidden" name="success_return_url" value="{Context::get('referer')}" />
+        <block loop="$member_config->agreements => $i, $agreement" cond="$agreement->type !== 'disabled'">
+            <input type="hidden" name="accept_agreement[{$i}]" value="Y" />
+        </block>
+        <ul>
+            <li class="input">
+                <div class="key">
+                    <div class="text">{lang('$user_lang->userLang20221103151412047')}</div>
+                    <div class="require"><div class="text">{lang('is_required')}</div></div>
+                </div>
+                <div class="value">
+                    <div class="input-box">
+                        <input type="email" name="email_address" placeholder="{lang('$user_lang->userLang20221103145917052')}" autocomplete="new-password" tabindex="1" />
+                    </div>
+                </div>
+            </li>
+            <li class="input">
+                <div class="key">
+                    <div class="text">{lang('password')}</div>
+                    <div class="require"><div class="text">{lang('is_required')}</div></div>
+                </div>
+                <div class="value">
+                    <div class="input-box">
+                        <input type="password" name="password" placeholder="{lang('msg_input_password')}" autocomplete="new-password" tabindex="2" />
+                        <a href="#" onclick="return false;" class="icon-right" id="PasswordShowButton">
+                            <i class="xi-eye-off"></i>
+                        </a>
+                    </div>
+                    <div cond="0" class="help text">
+                        {lang('member.about_password_strength')[$member_config->password_strength]}
+                    </div>
+                </div>
+            </li>
+            <li class="input">
+                <div class="key">
+                    <div class="text">{lang('msg_rechecked_password')}</div>
+                    <div class="require"><div class="text">{lang('is_required')}</div></div>
+                </div>
+                <div class="value">
+                    <div class="is-checked">
+                        <input type="hidden" name="is_password" value="N" />
+                    </div>
+                    <div class="input-box">
+                        <input type="password" name="password2" placeholder="{lang('$user_lang->userLang20221103151153006')}" autocomplete="new-password" tabindex="3" />
+                        <a href="#" onclick="return false;" class="icon-right" id="RePasswordShowButton">
+                            <i class="xi-eye-off"></i>
+                        </a>
+                    </div>
+                    <div class="help alert text">
+                        {lang('msg_password_mismatch')}
+                    </div>
+                </div>
+            </li>
+            <li class="input">
+                <div class="key">
+                    <div class="text">{lang('$user_lang->userLang20221212155953055')}</div>
+                    <div cond="!empty($recommend)" class="require"><div class="text">{lang('is_required')}</div></div>
+                </div>
+                <div class="value">
+                    <div class="input-box">
+                        <input type="text" name="recommend_email" value="{$recommend}" placeholder="{lang('$user_lang->userLang20221103145917052')}" tabindex="4" />
+                    </div>
+                </div>
+            </li>
+            <li class="input">
+                <div class="value">
+                    <ul class="check-box default">
+                        <li>
+                            <input type="checkbox" name="allow_mailing" value="Y" id="AllowMailing" />
+                            <label for="AllowMailing">
+                                <i class="xi-check-square icon"></i>
+                                <i class="xi-checkbox-blank icon"></i>
+                                <div class="text">{lang('$user_lang->userLang20221103151221014')}</div>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+        <div class="button-zone">
+            <button type="button" class="button larger" id="JoinButton">
+                <div class="text">{lang('$user_lang->userLang20221103151243048')}</div>
+            </button>
+        </div>
+    </form>
+</section>
+<section class="agree-section margin-top-small">
+    {@
+        $privacy = '<a href="' . getUrl('', 'mid', 'Privacy') . '" target="_blank">';
+        $privacy .= lang('$user_lang->userLang20221102234859080');
+        $privacy .= '</a>';
+        $agreement = '<a href="' . getUrl('', 'mid', 'Terms') . '" target="_blank">';
+        $agreement .= lang('$user_lang->userLang20221102234851020');
+        $agreement .= '</a>';
+        $text = $privacy . ', ' . $agreement;
+    }
+    {sprintf(lang('zcommon.se_join_agree'), $text)}
+</section>
+
+<include target="./_footer.html" />
+
+<script>
+    //# 비밀번호 확인
+    $('input[name=password2]').on('keyup', function() {
+        var password = $('input[name=password]').val();
+
+        if ($(this).val() == password) {
+            $('input[name=is_password]').val('Y');
+            $(this).parent().parent().find('.alert').hide();
+        } else {
+            $('input[name=is_password]').val('N');
+            $(this).parent().parent().find('.alert').show();
+        }
+    });
+    
+    //# 비밀번호 보이기
+    $('#PasswordShowButton, #RePasswordShowButton').on('click', function() {
+        var $password = $(this).parent().find('input');
+        var $icon = $(this).find('i');
+
+        if ($password.attr('type') == 'password') {
+            $password.attr('type', 'text');
+            $icon.attr('class', $icon.attr('class', ).replace('-off', ''));
+        } else {
+            $password.attr('type', 'password');
+            $icon.attr('class', $icon.attr('class') + '-off');
+        }
+    });
+
+    //# 회원가입 Submit
+    $('#JoinButton').on('click', function() {
+        if ($(this).hasClass('disabled')) {
+            return false;
+        }
+
+        var form = '#JoinForm';
+        var validation = $(form).checkValidation();
+        
+        if (!validation.is_check) {
+            alert(validation.message);
+            return false;
+        }
+
+        $(this).addClass('disabled');
+        $(form).submit();
+    });
+</script>

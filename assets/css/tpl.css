@@ -1,0 +1,175 @@
+@charset "utf-8";
+/* CSS Document */
+.x_modal._common._small {z-index:200000 !important;}
+
+/* Loading 화면 */
+#LoadingWrap {display:none;}
+.y_loading_bg {position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.7); z-index:200000;}
+.y_loading_wrap {position:fixed; top:50%; left:50%; margin:-100px 0 0 -100px; width:200px; height:200px; border-radius:30px; background-color:#fff; z-index:200001;}
+.y_loading_wrap .y_loading_text {padding:45px 20px 0; text-align:center; box-sizing:border-box;}
+.y_loading_wrap .y_loading_text .title {font-size:18px; font-weight:600; color:#000;}
+.y_loading_wrap .y_loading_text .desc {margin-top:10px; font-size:14px; font-weight:400; color:#666;}
+
+/* bootstrap 수정 */
+.x p {margin:0px !important;}
+.x select {width:auto !important;}
+.x label,
+.x select,
+.x textarea,
+.x input {margin-bottom:0px !important;}
+.x textarea {width:100%; min-height:100px; box-sizing:border-box;}
+.x form {margin:0px !important;}
+.x .section {margin:0px 0px 20px !important;}
+.x .x_help-block {margin-top:5px !important; margin-bottom:0 !important;}
+.x .x_pagination {margin-top:20px !important; text-align:center !important;}
+.x .x_pagination ul > li > a,
+.x .x_pagination ul > li > span,
+.x .x_pagination ul > li > strong {padding:0px 15px !important; line-height:35px !important;}
+.x .x_table {margin:0px !important; border-top:1px solid #888 !important;}
+.x .x_table-bordered {border-radius:0px !important;}
+.x .x_table-bordered th,
+.x .x_table-bordered td {text-align:center !important; border-radius:0px !important;}
+.x .x_navbar {margin-bottom:10px !important;}
+.x .x_navbar-inner,
+.x .x_navbar .x_nav > .x_active > a,
+.x .x_navbar .x_nav > .x_active > a:hover,
+.x .x_navbar .x_nav > .x_active > a:focus {border-radius:0px !important; box-shadow:none !important;}
+.x .x_navbar-inner {background-image:none !important;}
+.x .x_navbar .x_nav > .x_active > a,
+.x .x_navbar .x_nav > .x_active > a:hover,
+.x .x_navbar .x_nav > .x_active > a:focus {font-weight:bolder;}
+.x .x_nav-pills {border-bottom:0px !important;}
+.x ul, .x ol {margin:0;}
+
+/* 공용 */
+.x .y_title {margin:0px 0px 10px !important; padding-bottom:5px; color:#000 !important; border-bottom:1px solid #ddd;}
+.x .y_title.no_line {padding-bottom:0; border-bottom:0;}
+.x .y_clearfix {margin-bottom:20px !important;}
+.x .y_clearfix:after {content:''; display:block; clear:both;}
+.x .y_overwrap:after {content:''; display:block; clear:both;}
+.x .y_w1 {width:10% !important;}
+.x .y_w2 {width:20% !important;}
+.x .y_w3 {width:30% !important;}
+.x .y_w4 {width:40% !important;}
+.x .y_w5 {width:50% !important;}
+.x .y_w6 {width:60% !important;}
+.x .y_w7 {width:70% !important;}
+.x .y_w8 {width:80% !important;}
+.x .y_w9 {width:90% !important;}
+.x .y_w10 {width:100% !important;}
+.x .y_txt_left {text-align:left !important;}
+.x .y_txt_center {text-align:center !important;}
+.x .y_txt_right {text-align:right !important;}
+.x .y_txt_red {color:#F30 !important;}
+.x .y_txt_green {color:#00ba2e !important;}
+.x .y_txt_blue {color:#0098b0 !important;}
+.x .y_txt_gray {color:#777 !important;}
+.x .y_txt_black {color:#000 !important;}
+.x .y_txt_orange {color:#ffa500 !important;}
+.x .y_txt_bold {font-weight:bold !important;}
+.x .y_inline > li {display:inline-block;}
+.x .y_inline > li.separate {margin:0 10px;}
+
+/* 폼 */
+.x .y_form:after {content:''; display:block; clear:both;}
+.x .y_form h1 {font-size:18px !important;}
+.x .y_form .x_pull-left,
+.x .y_form .x_pull-right {width:49.2%;}
+.x .y_form .y_btn_area {margin:7px 0px 0px; padding:0px; list-style:none; text-align:center; overflow:hidden;}
+.x .y_form .y_btn_area > li {display:inline-block;}
+
+/* 폼 테이블 */
+.x .f_table {margin:0px; padding:0px; width:100%;}
+.x .f_table > tbody > tr > th,
+.x .f_table > tbody > tr > td {padding:8px 15px; text-align:left !important; vertical-align:middle;}
+.x .f_table > tbody > tr > th {width:130px; background-color:#F6F6F6;}
+.x .f_table > tbody > tr > td img {height:70px;}
+
+/* ul 박스형 제목 */
+.x ul.y_box_area {margin:0px; padding:10px 20px; list-style:none; border:1px solid #888; background-color:#fff; overflow:hidden;}
+.x ul.y_box_area > li {float:left; margin-left:20px; padding-left:20px; border-left:1px solid #ddd;}
+.x ul.y_box_area > li:first-child {margin-left:0px; padding-left:0px; border-left:0px;}
+
+/* 상단 배경에 색상 들어간 테이블 */
+.x .x_table_inverse thead th {background-color:#f5f5f5;}
+
+/* 테이블을 감싸는 영역 */
+.x .y_table_header {margin-top:0px; color:#666;}
+.x .y_table_header:after {content:''; display:block; clear:both;}
+.x .y_table_header .y_table_state {margin-bottom:10px; overflow:hidden;}
+.x .y_table_header .y_table_state .y_title {display:inline-block; *display:inline; *zoom:1;}
+.x .y_table_header .y_table_state .x_pull-left,
+.x .y_table_header .y_table_state .x_pull-right {padding-top:5px;}
+.x .y_table_footer,
+.x .y_table_header .y_table_control {padding:10px 15px; min-height:20px; border:1px solid #ddd; background-color:#f5f9fc; overflow:hidden;}
+.x .y_table_header .y_table_control {border-bottom:0px;}
+.x .y_table_footer {border-top:0px;}
+.x .y_table_header .y_select_area,
+.x .y_table_footer .y_select_area {margin:7px 0px 0px; padding:0px; list-style:none; overflow:hidden;}
+.x .y_table_header .y_select_area > li,
+.x .y_table_footer .y_select_area > li {float:left; margin-left:5px;}
+.x .y_table_header .y_select_area > li:first-child,
+.x .y_table_footer .y_select_area > li:first-child {margin-top:3px; margin-left:0px;}
+.x .y_table_header .y_select_area > li i,
+.x .y_table_footer .y_select_area > li i {font-size:16px; vertical-align:middle;}
+.x .y_table_header .y_btn_area,
+.x .y_table_footer .y_btn_area {margin:7px 0px 0px; padding:0px; list-style:none; overflow:hidden;}
+.x .y_table_header .y_btn_area > li,
+.x .y_table_footer .y_btn_area > li {float:left; margin-left:5px; line-height:1em;}
+.x .y_table_header .y_btn_area > li.title,
+.x .y_table_footer .y_btn_area > li.title {margin:6px 7px 0px 0px; font-weight:bold;}
+.x .y_table_body {min-height:0.01%; overflow-x:auto;}
+
+/* 테이블 내부에 들어가는 테이블 */
+.x .y_table {width:100%;}
+.x .y_table th,
+.x .y_table td {padding:10px; text-align:left !important; vertical-align:middle !important;}
+.x .y_table th {width:150px; font-weight:bold; background-color:#f9f9f9;}
+.x .y_table td {padding-top:5px; padding-bottom:5px;}
+.x .y_table tbody:first-child th,
+.x .y_table tbody:first-child td {border-top:1px solid #ddd !important;}
+.x .y_table tr:first-child th,
+.x .y_table tr:first-child td {border-top:0 !important;}
+
+/* 가로,세로 중앙 정렬 테이블 */
+.x .c_table {width:100%;}
+.x .c_table th {background-color:#f9f9f9;}
+.x .c_table th,
+.x .c_table td {text-align:center !important; vertical-align:middle !important;}
+.x .c_table th.c_txt_left,
+.x .c_table td.c_txt_left {text-align:left !important;}
+.x .c_table td img {height:70px;}
+
+/* 검색 */
+.x .s_btn_area {position:relative; margin:20px 0 30px; text-align:center;}
+.x .s_btn_area .x_btn-link {position:absolute; top:0px; left:0px; margin-top:-10px;}
+.x .s_btn_area .x_btn-large {padding-left:20px; padding-right:20px;}
+.x .s_table {width:100%; border-top:1px solid #888 !important;}
+.x .s_table > tbody > tr.close {display:none;}
+.x .s_table > tbody > tr > th,
+.x .s_table > tbody > tr > td {padding:8px 15px; text-align:left; border-right:1px solid #ddd; border-bottom:1px solid #ddd;}
+.x .s_table > tbody > tr > th {width:10%; background-color:#f5f5f5;}
+.x .s_table > tbody > tr > th:first-child,
+.x .s_table > tbody > tr > td:first-child {border-left:1px solid #ddd;}
+.x .s_table .input_date {width:100px;}
+
+/* 보기 */
+.x .v_table > tbody > tr > td img {width:auto; height:auto;}
+
+/* 체크박스,라디오버튼 정렬 */
+.x .ul_checkbox {margin:0px; padding:0px; overflow:hidden;;}
+.x .ul_checkbox > li {display:inline-block; margin:0px 10px 0px 0px;}
+
+/* 모달 */
+.x_modal-body .search_area {margin-left:0px;}
+.x_modal-body .search_area > li {display:inline-block; *display:inline; *zoom:1;}
+.x_modal-body .more_area {margin-top:10px;}
+
+/* 드롭 다운 메뉴 */
+.x .x_dropdown-menu {margin-top:0px !important;}
+
+@media screen and (max-width:1800px) {
+    .x .y_form .x_pull-left,
+    .x .y_form .x_pull-right {float:none; width:100%;}
+    .x .y_form .x_pull-right {margin-top:20px;}
+}

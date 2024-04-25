@@ -1,0 +1,151 @@
+<ul class="space-between auto<!--@if($oDocument->isExists())--> margin-top-large<!--@else--> margin-top<!--@end-->">
+    <li>
+        <div class="text">
+            {sprintf(lang('zcommon.msg_total_count'), $total_count)}
+        </div>
+    </li>
+    <li cond="$grant->write_document">
+        <ul class="list-zone">
+            <li>
+                <a href="{getUrl('act', 'dispBoardWrite', 'document_srl', '')}" class="button inline medium red">
+                    <div class="text">{$lang->cmd_write}</div>
+                </a>
+            </li>
+        </ul>
+    </li>
+</ul>
+<div class="table-wrap margin-top-smallest">
+    <table class="table-zone">
+        <thead>
+            <tr>
+                <block loop="$list_config => $key, $value">
+                    <th scope="col" cond="$value->type == 'no' && $value->idx == -1">
+                        <div class="text">{lang('no')}</div>
+                    </th>
+                    <th scope="col" class="title left" cond="$value->type == 'title' && $value->idx == -1">
+                        <div class="text">{lang('title')}</div>
+                    </th>
+                    <th scope="col" cond="$value->type == 'nick_name' && $value->idx == -1" class="left user">
+                        <div class="text">{lang('writer')}</div>
+                    </th>
+                    <th scope="col" cond="$value->type == 'user_id' && $value->idx == -1" class="left user">
+                        <div class="text">{lang('user_id')}</div>
+                    </th>
+                    <th scope="col" cond="$value->type == 'user_name' && $value->idx == -1" class="left user">
+                        <div class="text">{lang('user_name')}</div>
+                    </th>
+                    <th scope="col" cond="$value->type == 'regdate' && $value->idx == -1" class="date">
+                        <div class="text">{lang('date')}</div>
+                    </th>
+                    <th scope="col" cond="$value->type == 'last_update' && $value->idx == -1" class="date">
+                        <div class="text">{lang('last_update')}</div>
+                    </th>
+                    <th scope="col" cond="$value->type == 'last_post' && $value->idx == -1">
+                        <div class="text">{lang('last_post')}</div>
+                    </th>
+                    <th scope="col" cond="$value->type == 'readed_count' && $value->idx == -1" class="count">
+                        <div class="text">{lang('readed_count')}</div>
+                    </th>
+                    <th scope="col" cond="$value->type == 'voted_count' && $value->idx == -1" class="count">
+                        <div class="text">{lang('voted_count')}</div>
+                    </th>
+                    <th scope="col" cond="$value->type == 'blamed_count' && $value->idx == -1" class="count">
+                        <div class="text">{lang('blamed_count')}</div>
+                    </th>
+                    <th scope="col" cond="$value->type == 'comment_status' && $value->idx == -1" class="count">
+                        <div class="text">{lang('comment')}</div>
+                    </th>
+                    <th scope="col" cond="$value->idx != -1">
+                        <div class="text">{$value->name}</div>
+                    </th>
+                </block>
+                <th scope="col" cond="$grant->manager" style="width: 44px">
+                    <input type="checkbox" onclick="XE.checkboxToggleAll({ doClick:true });" class="iCheck" />
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr loop="$document_list => $no, $document">
+                <block loop="$list_config => $key, $value">
+                    <td class="no" cond="$value->type == 'no' && $value->idx == -1">
+                        <div class="text">{$no}</div>
+                    </td>
+                    <td class="module_title" cond="$value->type == 'module_title' && $value->idx == -1">
+                        <a href="{getUrl('', 'mid', $document->get('mid'))}">
+                            <div class="text">{$document->get('module_title')}</div>
+                        </a>
+                    </td>
+                    <td class="title left" cond="$value->type == 'title' && $value->idx == -1">
+                        <a href="{getUrl('document_srl', $document->document_srl, 'listStyle', $listStyle, 'cpage', '')}" class="font-bold color-red"|cond="$document_srl == $document->document_srl">
+                            <div class="text">{$document->getTitle()}</div>
+                            <div cond="empty($category)" class="desc text">{lang(getModel('document')->getCategory($document->get('category_srl'))->title)}</div>
+                        </a>
+                    </td>
+                    <td class="author left" cond="$value->type == 'nick_name' && $value->idx == -1">
+                        <a href="#popup_menu_area" class="member_{$document->get('member_srl')}" onclick="return false">
+                            <div class="text">{$document->getNickName()}</div>
+                        </a>
+                    </td>
+                    <td class="author" cond="$value->type == 'user_id' && $value->idx == -1">
+                        <div class="text">{$document->getUserID()}</div>
+                    </td>
+                    <td class="author" cond="$value->type == 'user_name' && $value->idx == -1">
+                        <div class="text">{$document->getUserName()}</div>
+                    </td>
+                    <td class="time" cond="$value->type == 'regdate' && $value->idx == -1">
+                        <div class="text">{$document->getRegdate('Y.m.d')}</div>
+                    </td>
+                    <td class="time" cond="$value->type == 'last_update' && $value->idx == -1">
+                        <div class="text">{zdate($document->get('last_update'), 'Y.m.d')}</div>
+                    </td>
+                    <td class="lastReply" cond="$value->type == 'last_post' && $value->idx == -1">
+                        <block cond="(int)($document->get('comment_count')) > 0">
+                            <a href="{$document->getUrl()}#comment">
+                                <div class="text">{zdate($document->get('last_update'), 'Y.m.d')}</div>
+                            </a>
+                            <span cond="$document->getLastUpdater()" class="text">
+                                <sub>by</sub>
+                                {$document->getLastUpdater()}
+                            </span>
+                        </block>
+                        <span cond="(int)($document->get('comment_count')) == 0" class="text">&nbsp;</span>
+                    </td>
+                    <td class="readNum" cond="$value->type == 'readed_count' && $value->idx == -1">
+                        <div class="text">
+                            {$document->get('readed_count') > 0 ? $document->get('readed_count') : '0'}
+                        </div>
+                    </td>
+                    <td class="voteNum" cond="$value->type == 'voted_count' && $value->idx == -1">
+                        <div class="text">
+                            {$document->get('voted_count') != 0 ? $document->get('voted_count') : '0'}
+                        </div>
+                    </td>
+                    <td class="voteNum" cond="$value->type == 'blamed_count' && $value->idx == -1">
+                        <div class="text">
+                            {$document->get('blamed_count') != 0 ? $document->get('blamed_count') : '0'}
+                        </div>
+                    </td>
+                    <td class="replyNum" cond="$value->type == 'comment_status' && $value->idx == -1">
+                        <div class="text">
+                            <a href="{getUrl('document_srl', $document->document_srl)}#comment" class="link">
+                                <div class="icon-left"><i class="xi-comment-o icon color-red"></i></div>
+                                <div class="text">{$document->getCommentCount()}</div>
+                            </a>
+                        </div>
+                    </td>
+                    <td cond="$value->idx != -1">
+                        <div class="text">{$document->getExtraValueHTML($val->idx)}&nbsp;</div>
+                    </td>
+                </block>
+                <td cond="$grant->manager" class="check">
+                    <input type="checkbox" name="cart" value="{$document->document_srl}" class="iCheck" onclick="doAddDocumentCart(this)" checked="checked"|cond="$document->isCarted()" />
+                </td>
+            </tr>
+            <tr cond="!$document_list && !$notice_list" class="nodata">
+                <td colspan="{count($list_config)}"|cond="!$grant->manager" colspan="{count($list_config) + 1}"|cond="$grant->manager">
+                    <div class="text">{lang('no_documents')}</div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

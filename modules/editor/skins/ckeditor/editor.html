@@ -1,0 +1,221 @@
+<!-- css -->
+{@ $css_var = new stdClass; }
+{@ $css_var->colorset = $colorset; }
+{@ $css_var->content_font = $content_font ? $content_font : 'none'; }
+{@ $css_var->content_font_size =  $content_font_size ? $content_font_size : 'none';}
+{@ $css_var->content_line_height = $content_line_height ? $content_line_height: 'none';}
+{@ $css_var->content_word_break = $content_word_break ? $content_word_break : 'none';}
+{@ $css_var->content_paragraph_spacing = $content_paragraph_spacing ? $content_paragraph_spacing : 'none';}
+
+{@ Context::set('css_var',$css_var);}
+<load target="css/default.less" vars="$css_var" />
+<load target="../../../../common/xeicon/xeicon.min.css" />
+
+<!-- JS -->
+<!--%load_js_plugin("ckeditor")-->
+<load target="../../tpl/js/editor_common.js" />
+<load target="../../tpl/js/editor.app.js" />
+<load target="js/xe_interface.js" />
+
+<script>
+var auto_saved_msg = "{$lang->msg_auto_saved}";
+</script>
+
+{@ $css_file_list = array()}
+<!--@foreach($editor_additional_css as $additional_css_url)-->
+	{@ $css_file_list[] = $additional_css_url}
+<!--@endforeach-->
+
+{@ $css_content = "" }
+
+<!--@if($enable_autosave)-->
+<input type="hidden" name="_saved_doc_title" value="{(isset($saved_doc) && $saved_doc) ? escape($saved_doc->title) : ''}" />
+<input type="hidden" name="_saved_doc_content" value="{(isset($saved_doc) && $saved_doc) ? escape($saved_doc->content) : ''}" />
+<input type="hidden" name="_saved_doc_document_srl" value="{(isset($saved_doc) && $saved_doc) ? $saved_doc->document_srl : ''}" />
+<input type="hidden" name="_saved_doc_message" value="{$lang->msg_load_saved_doc}" />
+<!--@end-->
+
+{@ $ckeditor_main_filemtime = filemtime(RX_BASEDIR . 'common/js/plugins/ckeditor/ckeditor/ckeditor.js')}
+{@ $ckeditor_config_filemtime = file_exists(RX_BASEDIR . 'common/js/plugins/ckeditor/ckeditor/config.js') ? filemtime(RX_BASEDIR . 'common/js/plugins/ckeditor/ckeditor/config.js') : 0}
+{@ $editor_height_fixed = $editor_height + ($editor_toolbar_hide ? 58 : ($editor_toolbar === 'simple' ? 74 : 140))}
+
+<div id="ckeditor_instance_{$editor_sequence}" data-editor-sequence="{$editor_sequence}" data-editor-primary-key-name="{$editor_primary_key_name}" data-editor-content-key-name="{$editor_content_key_name}" style="min-height:{$editor_height_fixed}px;"></div>
+
+<p cond="$enable_autosave" class="editor_autosaved_message autosave_message" id="editor_autosaved_message_{$editor_sequence}">&nbsp;</p>
+
+<block cond="$allow_fileupload">
+	<include target="file_upload.html" />
+</block>
+
+<script>
+	jQuery(function($){
+		"use strict";
+		<!--@if(!$ckeditor_config_filemtime)-->CKEDITOR.config.customConfig = '';<!--@endif-->
+		
+		// Import CSS content from PHP.
+		var css_content = {json_encode($css_content)};
+		
+		// Get default font name and list of other supported fonts.
+		var default_font_name = {json_encode($content_font ? trim(array_first(explode(',', $content_font)), '\'" ') : null)};
+		var default_font_fullname = {json_encode($content_font ?: null)};
+		if (default_font_fullname === null && window.getComputedStyle) {
+			var test_content = $('<div class="rhymix_content xe_content"></div>').hide().appendTo($(document.body));
+			var test_styles = window.getComputedStyle(test_content[0], null);
+			if (test_styles && test_styles.getPropertyValue) {
+				default_font_fullname = test_styles.getPropertyValue("font-family");
+				if (default_font_fullname) {
+					default_font_name = $.trim(default_font_fullname.split(',')[0].replace(/['"]/g, ''));
+					css_content = ".rhymix_content.editable { font-family:" + default_font_fullname + "; } " + css_content;
+				}
+			}
+		}
+		var font_list = [];
+		<!--@foreach($lang->edit->fontlist as $fontname)-->
+			font_list.push({json_encode(strval($fontname))});
+		<!--@endforeach-->
+		if (default_font_fullname !== null && !$.inArray(default_font_fullname, font_list)) {
+			font_list.push(default_font_fullname);
+		}
+		font_list = $.map(font_list, function(val) {
+			return $.trim(val.split(",")[0]) + "/" + val;
+		}).join(";");
+		
+		// Get default font size and list of other supported sizes.
+		var default_font_size = {json_encode(strval($content_font_size ?: '13'))};
+		default_font_size = parseInt(default_font_size.replace(/\D/, ''), 10);
+		var font_sizes = [8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 24, 28, 32, 36, 40, 48];
+		if (!$.inArray(default_font_size, font_sizes)) {
+			font_sizes.push(default_font_size);
+			font_sizes.sort();
+		}
+		font_sizes = $.map(font_sizes, function(val) {
+			return val + "/" + val + "px";
+		}).join(";");
+		
+		// Apply auto dark mode.
+		var editor_skin = '{$colorset}';
+		var editor_color = null;
+		<!--@if($editor_auto_dark_mode)-->
+			$('body').addClass('cke_auto_dark_mode');
+			if (getColorScheme() === 'dark') {
+				if (editor_skin !== 'moono-lisa' ) {
+					editor_skin = 'moono-dark';
+				}
+			}
+		<!--@endif-->
+		
+		// Initialize CKEditor settings.
+		var settings = {
+			ckeconfig: {
+				height: '{$editor_height}',
+				skin: editor_skin,
+				contentsCss: {json_encode($css_file_list)},
+				xe_editor_sequence: {$editor_sequence},
+	            font_defaultLabel: default_font_name,
+	            font_names: font_list,
+	            fontSize_defaultLabel: default_font_size,
+	            fontSize_sizes: font_sizes,
+				toolbarCanCollapse: true,
+				allowedContent: true,
+				startupFocus: {json_encode($editor_focus)},
+				language: "{str_replace('jp','ja',$lang_type)}",
+			},
+			loadXeComponent: true,
+			enableToolbar: true,
+			content_field: jQuery('[name={$editor_content_key_name}]')
+		};
+		
+		// Add style-sheet for the WYSIWYG
+		$(document.getElementsByTagName('link')).each(function() {
+			if ($(this).attr('rel') == 'stylesheet') {
+				settings.ckeconfig.contentsCss.push($(this).attr('href'));
+			}
+		});
+
+		// Prevent removal of icon fonts and Google code.
+		CKEDITOR.dtd.$removeEmpty.i = 0;
+		CKEDITOR.dtd.$removeEmpty.ins = 0;
+		
+		// Set the timestamp for plugins.
+		CKEDITOR.timestamp = '{strtoupper(dechex(max($ckeditor_main_filemtime, $ckeditor_config_filemtime)))}';
+
+		// Add editor components.
+		<!--@if($enable_component)-->
+			{@ $xe_component = array(); }
+			<!--@foreach($component_list as $component_name => $component)-->
+				{@ $xe_component[] = $component_name . ":'" . htmlentities($component->title, ENT_QUOTES, 'UTF-8') . "'"; }
+			<!--@endforeach-->
+			{@ $xe_component = implode(',', $xe_component); }
+
+			settings.ckeconfig.xe_component_arrays = {{$xe_component}};
+		<!--@else-->
+			settings.ckeconfig.xe_component_arrays = {};
+		<!--@endif-->
+
+		<!--@if(!$enable_default_component)-->
+			settings.enableToolbar = false;
+			settings.ckeconfig.toolbarCanCollapse = false;
+		<!--@endif-->
+
+		<!--@if(!$enable_component)-->
+			settings.loadXeComponent = false;
+		<!--@endif-->
+
+		// Set default toolbar status.
+		settings.ckeconfig.toolbarStartupExpanded = {$editor_toolbar_hide ? 'false' : 'true'};
+
+		// Add or remove plugins based on Rhymix configuration.
+		<!--@if($editor_additional_plugins)-->
+			settings.ckeconfig.extraPlugins = {json_encode(implode(',', $editor_additional_plugins))};
+		<!--@endif-->
+
+		<!--@if($editor_remove_plugins)-->
+			settings.ckeconfig.removePlugins = {json_encode(implode(',', $editor_remove_plugins))};
+		<!--@endif-->
+		
+		// https://github.com/rhymix/rhymix/issues/932
+		if (CKEDITOR.env.iOS) {
+			settings.ckeconfig.extraPlugins = (settings.ckeconfig.extraPlugins ? (settings.ckeconfig.extraPlugins + ',') : '') + 'divarea,ios_enterkey';
+			settings.ckeconfig.removePlugins = (settings.ckeconfig.removePlugins ? (settings.ckeconfig.removePlugins + ',') : '') + 'enterkey';
+			settings.loadXeComponent = false;
+			var additional_styles = '.cke_wysiwyg_div { padding: 8px !important; }';
+			additional_styles += 'html { min-width: unset; min-height: unset; width: unset; height: unset; margin: unset; padding: unset; }';
+			$('head').append('<st' + 'yle>' + additional_styles + String(css_content).replace(/\.rhymix_content\.editable/g, '.cke_wysiwyg_div') + '</st' + 'yle>');
+		}
+
+		// Define the simple toolbar.
+		<!--@if($editor_toolbar === 'simple')-->
+			settings.ckeconfig.toolbar = [
+				{ name: 'styles', items: [ 'FontSize', '-', 'Bold', 'Italic', 'Underline', 'TextColor', 'BGColor' ] },
+				{ name: 'paragraph', items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight' ] },
+				{ name: 'clipboard', items: [ 'Cut', 'Copy', 'Paste' ] },
+				{ name: 'insert', items: [ 'Link', 'Table' ] },
+				{ name: 'tools', items: [ 'Maximize', '-', 'Source' ] }
+			];
+		<!--@endif-->
+
+		<!--@if(!$html_mode)-->
+			settings.ckeconfig.removeButtons = 'Save,Preview,Print,Cut,Copy,Paste,Source';
+		<!--@endif-->
+
+		CKEDITOR.addCss(css_content);
+
+		// Initialize CKEditor.
+		var ckeApp = $('#ckeditor_instance_{$editor_sequence}').XeCkEditor(settings);
+		
+		// Add use_editor and use_html fields to parent form.
+		var parentform = $('#ckeditor_instance_{$editor_sequence}').parents('form');
+		var use_editor = parentform.find("input[name='use_editor']");
+		var use_html = parentform.find("input[name='use_html']");
+		if (use_editor.size()) {
+			use_editor.val("Y");
+		} else {
+			parentform.append('<input type="hidden" name="use_editor" value="Y" />');
+		}
+		if (use_html.size()) {
+			use_html.val("Y");
+		} else {
+			parentform.append('<input type="hidden" name="use_html" value="Y" />');
+		}
+	});
+</script>

@@ -1,0 +1,29 @@
+php_value post_max_size 1000M
+php_value upload_max_filesize 1000M
+php_value memory_limit 1024M
+php_value max_input_time 5000
+php_value max_execution_time 5000
+php_value curl.cainfo "./cacert.pem"
+
+RewriteEngine On
+
+# 추천인
+RewriteRule ^Recommend/([^/]*) /index.php?mid=Recommend&recommend=$1 [R,L]
+
+# block direct access to templates, XML schema files, config files, dotfiles, environment, etc.
+RewriteCond %{REQUEST_URI} !/modules/editor/(skins|styles)/
+RewriteRule ^(addons|common/tpl|files/ruleset|(m\.)?layouts|modules|plugins|themes|widgets|widgetstyles)/.+\.(html|xml)$ - [L,F]
+RewriteRule ^files/(attach|config|cache/store)/.+\.(ph(p|t|ar)?[0-9]?|p?html?|cgi|pl|exe|[aj]spx?|inc|bak)$ - [L,F]
+RewriteRule ^files/(env|member_extra_info/(new_message_flags|point))/ - [L,F]
+RewriteRule ^(\.git|\.ht|\.travis|codeception\.|composer\.|Gruntfile\.js|package\.json|CONTRIBUTING|COPYRIGHT|LICENSE|README) - [L,F]
+
+# static files
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteRule ^(.+)/(addons|files|layouts|m\.layouts|modules|widgets|widgetstyles)/(.*) ./$2/$3 [L]
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteRule ^(.+)\.min\.(css|js)$ ./$1.$2 [L]
+
+# all other short URLs
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteRule . index.php [L]

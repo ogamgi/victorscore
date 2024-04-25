@@ -1,0 +1,100 @@
+@charset "utf-8";
+/*************/
+/* 가로 1310 */
+/*************/
+@media (max-width: 1310px) {
+}
+/*************/
+/* 가로 1210 */
+/*************/
+@media (max-width: 1210px) {
+}
+/*************/
+/* 가로 1010 */
+/*************/
+@media (max-width: 1010px) {
+}
+/*************/
+/* 가로 810 */
+/*************/
+@media (max-width: 810px) {
+}
+/*************/
+/* 가로 600 */
+/*************/
+@media (max-width: 600px) {
+    /* center zone */
+    .center-zone {
+        flex-flow: column;
+        justify-content: flex-start;
+        width: 100%;
+    }
+    /* contents zone */
+    .contents-zone .title,
+    .contents-zone .contents,
+    .contents-zone .table-zone.box-inner th,
+    .contents-zone .table-zone.box-inner td {
+        padding-left: var(--size-tiny);
+        padding-right: var(--size-tiny);
+    }
+    .contents-zone .title {
+        font-size: var(--font-large);
+    }
+    /* amount info */
+    .amount-info .amount {
+        margin-top: var(--size-medium);
+    }
+    .amount-info .desc {
+        margin-top: var(--size-tiny);
+        margin-bottom: var(--size-medium);
+    }
+    .amount-info .buttons {
+        flex-flow: column;
+        justify-content: center;
+        margin: calc(-1 * var(--size-tiny));
+    }
+    .amount-info .buttons .button {
+        margin: var(--size-tiny);
+    }
+    /* trans form */
+    .trans-step,
+    .trans-form {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    .trans-form .radio-box label {
+        height: calc(var(--size-largest));
+    }
+    .trans-next {
+        padding-left: var(--size-smallest);
+        padding-right: var(--size-smallest);
+        width: 100%;
+    }
+    /* trans list */
+    .trans-list > li.no-trans,
+    .trans-list > li > a {
+        padding-left: var(--size-small);
+        padding-right: var(--size-small);
+    }
+    .trans-list > li > a {
+        flex-flow: column;
+        justify-content: flex-start;
+    }
+    .trans-list > li > a .info {
+        flex-flow: column;
+    }
+    .trans-list > li > a .desc {
+        margin-top: var(--size-smallest);
+        margin-bottom: var(--size-smallest);
+        margin-left: 0px;
+    }
+    .trans-list > li > a .state {
+        margin-top: var(--size-micro);
+    }
+    .trans-list > li > a .reason {
+        margin-top: var(--size-tiny);
+    }
+    .trans-list > li > a .amount {
+        margin-left: 0px;
+    }
+}

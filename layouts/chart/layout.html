@@ -1,0 +1,118 @@
+{@
+    Context::addHtmlHeader('<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">');
+    $referer_url = getCurrentPageUrl();
+}
+
+<!--@if ($is_logged)-->
+    {@
+        $recommend_member = getModel('zmember')->getRecommendMember($logged_info->member_srl);
+    }
+<!--@end-->
+
+<script>
+    xe.input_box_message = "{lang('zcommon.msg_not_input')}";
+    xe.select_box_message = "{lang('zcommon.msg_not_select')}";
+    xe.check_box_message = "{lang('zcommon.msg_not_select')}";
+    xe.radio_box_message = "{lang('zcommon.msg_not_select')}";
+    xe.email_box_message = "{lang('filter')['invalid_email']}";
+    xe.top_margin = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--size-largest').replace('px', '')) * 2;
+</script>
+
+<load target="../../assets/css/gmarketsans.css" index="0" />
+<load target="../../assets/css/esamanru.css" index="0" />
+<load target="../../assets/css/xeicon.min.css" index="0" />
+<load target="../../assets/css/reset.css" index="0" />
+<load target="../../assets/css/lib/swiper-bundle.min.css" index="0" />
+<load target="../../assets/css/var.css" index="0" />
+<load target="../../assets/css/common.css" index="1" />
+<load target="../../assets/css/layout.chart.css" index="2" />
+<load target="../../assets/css/common.query.css" index="3" />
+<load target="../../assets/css/layout.chart.query.css" index="4" />
+
+<load target="../../assets/js/lib/swiper-bundle.min.js" />
+<load target="../../assets/js/common.js" />
+
+<header class="header-wrap">
+    <div class="center-zone">
+        <ul class="space-between">
+            <li>
+                <a href="{getUrl()}" class="logo">
+                    <!--@if (strpos($mid, 'Index') !== false)-->
+                        <img src="../../assets/images/chart/logo_white.svg" />
+                    <!--@else-->
+                        <img src="../../assets/images/chart/logo.svg" />
+                    <!--@end-->
+                </a>
+                <ul class="menu-area">
+                    <li loop="$global_menu->list => $key1, $value1" cond="$value1['expand'] == 'N'" class="active"|cond="$value1['selected']">
+                        <a href="{$value1['href']}">
+                            <div class="text">{lang($value1['menu_name_key'])}</div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <ul class="link-area">
+                    <li>
+                        <a href="#" onclick="return false;">
+                            <div class="text">로그인</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="return false;" class="box">
+                            <div class="text">시작하기</div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</header>
+<main class="main-wrap">
+    {$content}
+</main>
+<footer class="footer-wrap">
+    <div class="footer-menu">
+        <div class="center-zone">
+            <ul class="space-between">
+                
+            </ul>
+        </div>
+    </div>
+</footer>
+<div class="loading-wrap" id="LoadingWrap">
+    <div class="background"></div>
+    <div class="loading-icon">
+        <i class="xi-spinner-5 xi-spin"></i>
+    </div>
+</div>
+
+<script cond="$XE_VALIDATOR_MESSAGE || $ERROR_MSG">
+    $(window).load(function() {
+        var xe_msg = '{$XE_VALIDATOR_MESSAGE}';
+        var error_msg = '{$ERROR_MSG}';
+        var referer_url = '{$REFERER_URL}';
+        
+        setTimeout(function() {
+            if (isEmpty(xe_msg) === true) {
+                alert(error_msg);
+                
+                if (isEmpty(referer_url) === false) {
+                    location.href = referer_url;
+                }
+            } else {
+                alert(xe_msg);
+            }
+        }, 100);
+    });
+</script>
+
+<script>
+    $(window).scroll(function(e) {
+        if ($(this).scrollTop() > 10) {
+            $('.header-wrap').addClass('scroll');
+        } else {
+            $('.header-wrap').removeClass('scroll');
+        }
+    });
+</script>

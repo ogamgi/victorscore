@@ -1,0 +1,171 @@
+{@
+    Context::addHtmlHeader('<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">');
+    $first_selected = array();
+}
+
+<script>
+    xe.input_box_message = "{lang('zcommon.msg_not_input')}";
+    xe.select_box_message = "{lang('zcommon.msg_not_select')}";
+    xe.check_box_message = "{lang('zcommon.msg_not_select')}";
+    xe.radio_box_message = "{lang('zcommon.msg_not_select')}";
+    xe.email_box_message = "{lang('filter')['invalid_email']}";
+    xe.top_margin = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--size-large').replace('px', '')) * 2;
+</script>
+
+<load target="../../assets/css/gmarketsans.css" index="0" />
+<load target="../../assets/css/esamanru.css" index="0" />
+<load target="../../assets/css/xeicon.min.css" index="0" />
+<load target="../../assets/css/reset.css" index="0" />
+<load target="../../assets/css/var.css" index="0" />
+<load target="../../assets/css/common.css" index="1" />
+<load target="../../assets/css/layout.client.css" index="2" />
+
+<load target="../../assets/js/common.js" />
+
+<header class="header-wrap">
+    <div class="mainmenu-zone">
+        <div class="center-zone">
+            <ul class="space-between">
+                <li>
+                    <div class="logo">
+                        <img src="../../assets/images/logo_white.svg" />
+                    </div>
+                    <ul class="menu-area">
+                        <li loop="$global_menu->list => $key1, $value1" cond="$value1['expand'] == 'N' && $value1['isShow']" class="active"|cond="$value1['selected']">
+                            <!--@if ($value1['selected'])-->
+                                {@
+                                    $first_selected = $value1;
+                                }
+                            <!--@end-->
+                            <a href="{$value1['href']}" class="link">{lang($value1['menu_name_key'])}</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <ul class="link-area">
+                        <li>
+                            <a href="#" onclick="return false;" class="lang-toggle-button">
+                                <h6 class="active"|cond="Context::getLangType() === 'ko'" data-lang_type="ko">KOR</h6>
+                                <div class="separate">/</div>
+                                <h6 class="active"|cond="Context::getLangType() === 'en'" data-lang_type="en">ENG</h6>
+                            </a>
+                        </li>
+                        <li class="separate large"></li>
+                        <li>
+                            <a href="{getUrl('', 'act', 'dispMemberLogout')}" class="link">
+                                {lang('$user_lang->userLang20221103170542092')}
+                            </a>
+                        </li>
+                        <li class="separate"></li>
+                        <li>
+                            <a href="{getUrl('', 'mid', 'MyIndex')}" class="link font-bold">
+                                {lang('$user_lang->userLang20221103170709015')}
+                            </a>
+                        </li>
+                        <li class="separate large"></li>
+                    </ul>
+                    <a href="#" onclick="return false;" class="menu-button">
+                        <i class="xi-bars"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+<main class="main-wrap">
+    <div class="center-zone">
+        <section class="title-section">
+            <h1 class="font-bold-point">{lang($first_selected['menu_name_key'])}</h1>
+            <ul cond="!empty($first_selected['list'])" class="tab-menu margin-top-small">
+                <block loop="$first_selected['list'] => $key, $value" cond="$value['expand'] == 'N'">
+                    {@
+                        $tmp_url = explode('/', $value['href']);
+                    }
+                    <li class="active"|cond="(empty($act) && empty($tmp_url[2]) && $tmp_url[1] == $mid) || (!empty($act) && !empty($tmp_url[2]) && $tmp_url[1] == $mid && $tmp_url[2] == $act)">
+                        <a href="{$value['href']}">
+                            <div class="text">{lang($value['menu_name_key'])}</div>
+                            <div class="underline"></div>
+                        </a>
+                    </li>
+                </block>
+            </ul>
+        </section>
+        {$content}
+    </div>
+</main>
+<footer class="footer-wrap">
+    <ul cond="0" class="footer-menu">
+        <li>
+            <a href="#" onclick="return false;">
+                {lang('$user_lang->userLang20221102234830022')}
+            </a>
+        </li>
+        <li class="separate"><div></div></li>
+        <li>
+            <a href="#" onclick="return false;">
+                {lang('$user_lang->userLang20221102234836091')}
+            </a>
+        </li>
+        <li class="separate"><div></div></li>
+        <li>
+            <a href="#" onclick="return false;">
+                {lang('$user_lang->userLang20221102234845000')}
+            </a>
+        </li>
+        <li class="separate"><div></div></li>
+        <li>
+            <a href="#" onclick="return false;">
+                {lang('$user_lang->userLang20221102234851020')}
+            </a>
+        </li>
+        <li class="separate"><div></div></li>
+        <li>
+            <a href="#" onclick="return false;">
+                {lang('$user_lang->userLang20221102234859080')}
+            </a>
+        </li>
+        <li class="separate"><div></div></li>
+        <li>
+            <a href="#" onclick="return false;">
+                {lang('$user_lang->userLang20221102234906067')}
+            </a>
+        </li>
+    </ul>
+    <div class="footer-copy margin-top-small">© VICTORSCORE 2022</div>
+</footer>
+<div class="loading-wrap" id="LoadingWrap">
+    <div class="background"></div>
+    <div class="loading-icon">
+        <i class="xi-spinner-5 xi-spin"></i>
+    </div>
+</div>
+
+<script cond="$XE_VALIDATOR_MESSAGE || $ERROR_MSG">
+    $(window).load(function() {
+        var xe_msg = '{$XE_VALIDATOR_MESSAGE}';
+        var error_msg = '{$ERROR_MSG}';
+        var referer_url = '{$REFERER_URL}';
+        
+        setTimeout(function() {
+            if (isEmpty(xe_msg) === true) {
+                alert(error_msg);
+                
+                if (isEmpty(referer_url) === false) {
+                    location.href = referer_url;
+                }
+            } else {
+                alert(xe_msg);
+            }
+        }, 100);
+    });
+</script>
+
+<script>
+	$(window).scroll(function(e) {
+        if ($(this).scrollTop() > 10) {
+            $('.header-wrap').addClass('scroll');
+        } else {
+            $('.header-wrap').removeClass('scroll');
+        }
+    });
+</script>

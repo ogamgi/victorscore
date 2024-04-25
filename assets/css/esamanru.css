@@ -1,0 +1,23 @@
+@font-face {
+    font-family: 'esamanruBold';
+    src: url('../fonts/esamanruBold.woff') format('woff'),
+        url('../fonts/esamanruBold.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'esamanruMedium';
+    src: url('../fonts/esamanruMedium.woff') format('woff'),
+        url('../fonts/esamanruMedium.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'esamanruLight';
+    src: url('../fonts/esamanruLight.woff') format('woff'),
+        url('../fonts/esamanruLight.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}

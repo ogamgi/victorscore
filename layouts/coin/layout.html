@@ -1,0 +1,179 @@
+{@
+    Context::addHtmlHeader('<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">');
+}
+
+<script>
+    xe.input_box_message = "{lang('zcommon.msg_not_input')}";
+    xe.select_box_message = "{lang('zcommon.msg_not_select')}";
+    xe.check_box_message = "{lang('zcommon.msg_not_select')}";
+    xe.radio_box_message = "{lang('zcommon.msg_not_select')}";
+    xe.email_box_message = "{lang('filter')['invalid_email']}";
+    xe.top_margin = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--size-large').replace('px', '')) * 2;
+</script>
+
+<load target="../../assets/css/gmarketsans.css" index="0" />
+<load target="../../assets/css/esamanru.css" index="0" />
+<load target="../../assets/css/xeicon.min.css" index="0" />
+<load target="../../assets/css/reset.css" index="0" />
+<load target="../../assets/css/var.css" index="0" />
+<load target="../../assets/css/common.css" index="1" />
+<load target="../../assets/css/common.query.css" index="1" />
+<load target="../../assets/css/layout.coin.css" index="2" />
+<load target="../../assets/css/layout.coin.query.css" index="2" />
+
+<load target="../../assets/js/common.js" />
+
+<div class="main-wrap">
+    <div class="center-zone">
+        {$content}
+    </div>
+</div>
+<div class="footer-wrap">
+    <div class="text">© VICTORK COIN 2024</div>
+</div>
+<div class="menu-wrap" id="LinkWrap">
+    <div class="background"></div>
+    <div class="menu-zone">
+        <div class="center-zone">
+            <div class="title text">빅터K 사이트</div>
+            <ul class="menu-list">
+                <li>
+                    <a href="http://victorkscore.com" target="_blank">
+                        <div class="text">빅터K 스코어</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="http://victorkchart.com" target="_blank">
+                        <div class="text">빅터K 차트</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="http://kntlk.com" target="_blank">
+                        <div class="text">큰틀K</div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="menu-wrap" id="MenuWrap">
+    <div class="background"></div>
+    <div class="menu-zone">
+        <div class="center-zone">
+            <div class="title text">전체 메뉴</div>
+            <ul class="menu-list">
+                <li loop="$global_menu->list => $key, $value" cond="$value['expand'] == 'N'" class="active"|cond="$value['selected']">
+                    <a href="{$value['href']}">
+                        <div class="text">{$value['text']}</div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="header-wrap">
+    <div class="center-zone">
+        <div class="space-between">
+            <div class="left">
+                <a href="#" onclick="return false;" class="link-button" id="LinkButton">
+                    <i class="xi-ellipsis-h off"></i>
+                    <i class="xi-close on"></i>
+                </a>
+                <a cond="0" href="#" onclick="return false;" class="prev-button">
+                </a>
+            </div>
+            <div class="center">
+                <a href="{getUrl('')}" class="logo">
+                    <img src="../../assets/images/coin/logo.png" />
+                </a>
+            </div>
+            <div class="right">
+                <a href="#" onclick="return false;" class="menu-button" id="MenuButton">
+                    <i class="xi-bars off"></i>
+                    <i class="xi-close on"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="loading-wrap" id="LoadingWrap">
+    <div class="background"></div>
+    <div class="loading-icon">
+        <i class="xi-spinner-3 xi-spin"></i>
+    </div>
+</div>
+
+<script cond="$XE_VALIDATOR_MESSAGE || $ERROR_MSG">
+    $(window).load(function() {
+        var xe_msg = '{$XE_VALIDATOR_MESSAGE}';
+        var error_msg = '{$ERROR_MSG}';
+        var referer_url = '{$REFERER_URL}';
+        
+        setTimeout(function() {
+            if (isEmpty(xe_msg) === true) {
+                alert(error_msg);
+                
+                if (isEmpty(referer_url) === false) {
+                    location.href = referer_url;
+                }
+            } else {
+                alert(xe_msg);
+            }
+        }, 100);
+    });
+</script>
+
+<script>
+    //# 메뉴 보이기
+    $('#MenuButton').on('click', function() {
+        if ($(this).hasClass('show')) {
+            $(this).removeClass('show');
+            $('#MenuWrap').hide();
+        } else {
+            $(this).addClass('show');
+            $('#MenuWrap').show();
+        }
+
+        if ($('#LinkButton').hasClass('show')) {
+            $('#LinkButton').removeClass('show');
+            $('#LinkWrap').hide();
+        }
+    });
+
+    $('#MenuWrap .background').on('click', function() {
+        $('#MenuButton').removeClass('show');
+        $('#MenuWrap').hide();
+
+        if ($('#LinkButton').hasClass('show')) {
+            $('#LinkButton').removeClass('show');
+            $('#LinkWrap').hide();
+        }
+    });
+
+    //# 링크 보이기
+    $('#LinkButton').on('click', function() {
+        if ($(this).hasClass('show')) {
+            $(this).removeClass('show');
+            $('#LinkWrap').hide();
+        } else {
+            $(this).addClass('show');
+            $('#LinkWrap').show();
+        }
+
+        if ($('#MenuButton').hasClass('show')) {
+            $('#MenuButton').removeClass('show');
+            $('#MenuWrap').hide();
+        }
+    });
+
+    $('#LinkWrap .background').on('click', function() {
+        $('#LinkButton').removeClass('show');
+        $('#LinkWrap').hide();
+
+        if ($('#MenuButton').hasClass('show')) {
+            $('#MenuButton').removeClass('show');
+            $('#MenuWrap').hide();
+        }
+    });
+</script>

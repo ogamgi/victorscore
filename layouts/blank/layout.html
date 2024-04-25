@@ -1,0 +1,112 @@
+{@
+    Context::addHtmlHeader('<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">');
+}
+
+<script>
+    xe.msg_prepare = "{lang('$user_lang->userLang20221103165535077')}";
+    xe.msg_password_mismatch = "{lang('msg_password_mismatch')}";
+    xe.input_box_message = "{lang('zcommon.msg_not_input')}";
+    xe.select_box_message = "{lang('zcommon.msg_not_select')}";
+    xe.check_box_message = "{lang('zcommon.msg_not_select')}";
+    xe.radio_box_message = "{lang('zcommon.msg_not_select')}";
+    xe.email_box_message = "{lang('filter')['invalid_email']}";
+    xe.is_check_message = "{lang('filter')['equalto']}";
+    xe.top_margin = 0;
+</script>
+
+<load target="../../assets/css/gmarketsans.css" index="0" />
+<load target="../../assets/css/esamanru.css" index="0" />
+<load target="../../assets/css/xeicon.min.css" index="0" />
+<load target="../../assets/css/reset.css" index="0" />
+<load target="../../assets/css/var.css" index="0" />
+<load target="../../assets/css/common.css" index="1" />
+<load target="../../assets/css/common.query.css" index="2" />
+<load target="../../assets/css/layout.blank.css" index="3" />
+<load target="../../assets/css/layout.blank.query.css" index="4" />
+
+<load target="../../assets/js/common.js" />
+
+<header class="header-wrap">
+    <div class="center-zone small">
+        <ul class="space-between">
+            <li>
+                <a href="#" onclick="history.go(-1); return false;" class="link prev-button">
+                    <div class="icon-left"><i class="xi-angle-left icon"></i></div>
+                    <div class="text">{lang('$user_lang->userLang20221102235753066')}</div>
+                </a>
+            </li>
+            <li>
+                <a href="{getUrl()}" class="link">
+                    <div class="icon-left"><i class="xi-home icon"></i></div>
+                    <div class="text">{lang('$user_lang->userLang20221212020943093')}</div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</header>
+<main class="main-wrap">
+    <div class="center-zone small">
+        {$content}
+    </div>
+</main>
+<footer class="footer-wrap">
+    <ul class="footer-menu">
+        <li>
+            <a href="{getUrl('', 'mid', 'Company')}">
+                {lang('$user_lang->userLang20221102234830022')}
+            </a>
+        </li>
+        <li class="separate"><div></div></li>
+        <li>
+            <a href="{getUrl('', 'mid', 'Advertisement')}">
+                {lang('$user_lang->userLang20221102234845000')}
+            </a>
+        </li>
+        <li class="separate"><div></div></li>
+        <li>
+            <a href="{getUrl('', 'mid', 'Terms')}">
+                {lang('$user_lang->userLang20221102234851020')}
+            </a>
+        </li>
+        <li class="separate"><div></div></li>
+        <li>
+            <a href="{getUrl('', 'mid', 'Privacy')}">
+
+                {lang('$user_lang->userLang20221102234859080')}
+            </a>
+        </li>
+        <li class="separate"><div></div></li>
+        <li>
+            <a href="{getUrl('', 'mid', 'Youth')}">
+                {lang('$user_lang->userLang20221102234906067')}
+            </a>
+        </li>
+    </ul>
+    <div class="footer-copy margin-top-small">© VICTORSCORE 2022</div>
+</footer>
+<div class="loading-wrap" id="LoadingWrap">
+    <div class="loading-background"></div>
+    <div class="loading-icon">
+        <i class="xi-spinner-5 xi-spin"></i>
+    </div>
+</div>
+
+<script cond="$XE_VALIDATOR_MESSAGE || $ERROR_MSG">
+    $(window).load(function() {
+        var xe_msg = '{$XE_VALIDATOR_MESSAGE}';
+        var error_msg = '{$ERROR_MSG}';
+        var referer_url = '{$REFERER_URL}';
+        
+        setTimeout(function() {
+            if (isEmpty(xe_msg) === true) {
+                alert(error_msg);
+                
+                if (isEmpty(referer_url) === false) {
+                    location.href = referer_url;
+                }
+            } else {
+                alert(xe_msg);
+            }
+        }, 100);
+    });
+</script>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skin version="0.2">
+    <title xml:lang="ko">Forum</title>
+    <version>1.0</version>
+    <date>2022-12-01</date>
+    <author email_address="withy@withy.kr" link="http://withy.kr">
+        <name xml:lang="ko">위디</name>
+    </author>
+    <license></license>
+    <extra_vars>
+    </extra_vars>
+</skin>
+

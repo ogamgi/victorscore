@@ -1,0 +1,94 @@
+@charset "utf-8";
+/*************/
+/* Variables */
+/*************/
+:root {
+    /* color */
+    --color-away: #20514B;
+    --color-white: #fff;
+    --color-white-opacity: rgba(255, 255, 255, 0.5);
+    --color-white-opacity-full: rgba(255, 255, 255, 0);
+    --color-black: #090b16;
+    --color-black-opacity: rgba(0, 0, 0, 0.7);
+    --color-black-opacity-light: rgba(0, 0, 0, 0.1);
+    --color-deep-gray: #777;
+    --color-gray: #999;
+    --color-light-gray: #ccc;
+    --color-gray-opacity: rgba(0, 0, 0, 0.15);
+    --color-deep-yellow: #a15c07;
+    --color-yellow: #eaaa08;
+    --color-light-yellow: #F7CF46;
+    --color-yellow-opacity: rgba(253, 184, 39, 0.3);
+    --color-yellow-background: rgba(253, 184, 39, 0.1);
+    --color-red: #bb2649;
+    --color-red-opacity: rgba(182, 6, 6, 0.1);
+    --color-blue: #3981CB;
+    --color-light-blue: #9CDAFB;
+    --color-light-green: #E0F1EA;
+    --color-green: #03C75A;
+    --color-background: #f3f4f5;
+    --color-light-background: #f9fafa;
+    --color-shadow: rgba(0, 0, 0, 0.16);
+    --color-gradient: linear-gradient(90deg, #9a30a8 0%, #dd4079 50%, #de9132 100%);
+    /* font */
+    --font-light-point: 'esamanruLight';
+    --font-regular-point: 'esamanruMedium';
+    --font-bold-point: 'esamanruBold';
+    --font-light: 'GmarketSansLight';
+    --font-regular: 'GmarketSansMedium';
+    --font-bold: 'GmarketSansBold';
+    --font-smaller: 11px;
+    --font-small: 12px;
+    --font-medium: 13px;
+    --font-large: 15px;
+    --font-larger: 17px;
+    --font-largest: 21px;
+    --font-big: 23px;
+    --font-bigger: 25px;
+    --font-biggest: 29px;
+    --font-great: 31px;
+    --font-greater: 33px;
+    --font-greatest: 35px;
+    --font-huge: 39px;
+    /* size */
+    --size-center-max: 1300px;
+    --size-center-min: 700px;
+    --size-center: 450px;
+    --size-micro: 2px;
+    --size-tiny: 6px;
+    --size-smallest: 10px;
+    --size-smaller: 16px;
+    --size-small: 20px;
+    --size-medium: 30px;
+    --size-large: 40px;
+    --size-larger: 50px;
+    --size-largest: 60px;
+    --size-big: 130px;
+    --size-bigger: 210px;
+    --size-biggest: 280px;
+    --size-huge: 390px;
+    --size-calc: 100px;
+    /* border */
+    --border-default: 1px solid rgba(0, 0, 0, 0.13);
+    --border-default-strong: 4px solid rgba(0, 0, 0, 0.13);
+    --border-black: 1px solid var(--color-black);
+    --border-black-normal: 2px solid var(--color-black);
+    --border-black-strong: 4px solid var(--color-black);
+    --border-gray: 1px solid #dedede;
+    --border-deep-gray: 1px solid #acacac;
+    --border-white: 1px solid rgba(255, 255, 255, 0.3);
+    --border-red: 1px solid var(--color-red);
+    --border-red-strong: 4px solid var(--color-red);
+    /* line height */
+    --line-smallest: 1.1rem;
+    --line-smaller: 1.2rem;
+    --line-small: 1.3rem;
+    --line-default: 1.5rem;
+    --line-large: 1.7rem;
+    --line-larger: 1.9rem;
+    --line-largest: 2.1rem;
+    --line-big: 2.3rem;
+    --line-bigger: 2.5rem;
+    --line-biggest: 2.7rem;
+    --line-huge: 3.3rem;
+}

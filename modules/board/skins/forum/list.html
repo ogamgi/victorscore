@@ -1,0 +1,80 @@
+<include target="../../../zuser/skins/default/_header.html" />
+
+<section class="main-section<!--@if ($module_info->use_category == 'Y' && empty($category) && empty($sort_index))--> small<!--@end-->">
+	<div class="title-zone">
+		<a href="{getUrl('act', '', 'document_srl', '', 'sort_index', '', 'order_type', '')}" class="title">
+			<div class="text">
+				<!--@if (!empty($second_menu))-->
+					{lang($second_menu['menu_name_key'])}
+				<!--@else-->
+					{lang($first_menu['menu_name_key'])}
+				<!--@end-->
+			</div>
+		</a>
+		<!--@if ($mid != 'CoinQna')-->
+			<ul class="tab-menu">
+				<li cond="$module_info->use_category == 'Y' && empty($category)" class="active"|cond="empty($sort_index) && empty($order_type)">
+					<a href="{getUrl('category', '', 'sort_index', '', 'order_type', '', 'page', '', 'document_srl', '')}">
+						<div class="text">{lang('category')}</div>
+						<div class="underline"></div>
+					</a>
+				</li>
+				<li class="active"|cond="($module_info->use_category == 'Y' && (empty($category) && $sort_index == 'regdate' && $order_type == 'desc') || (!empty($category) && empty($sort_index) || $sort_index == 'regdate' && $order_type == 'desc')) || ($module_info->use_category == 'N' && empty($sort_index) || $sort_index == 'regdate' && $order_type == 'desc')">
+					<a href="{getUrl('sort_index', 'regdate', 'order_type', 'desc', 'page', '', 'document_srl', '')}">
+						<div class="text">{lang('$user_lang->userLang20221215211942004')}</div>
+						<div class="underline"></div>
+					</a>
+				</li>
+				<li class="active"|cond="$sort_index == 'readed_count' && $order_type == 'desc'">
+					<a href="{getUrl('sort_index', 'readed_count', 'order_type', 'desc', 'page', '', 'document_srl', '')}">
+						<div class="text">{lang('$user_lang->userLang20221215212046041')}</div>
+						<div class="underline"></div>
+					</a>
+				</li>
+			</ul>
+		<!--@end-->
+	</div>
+	<include cond="$oDocument->isExists()" target="_read.html" />
+	<!--@if ($module_info->use_category == 'Y' && empty($category))-->
+		<!--@if (!empty($sort_index) && !empty($order_type))-->
+			<include target="./_list_default.html" />
+			<include target="../../../zuser/skins/default/_Pagination.html" />
+		<!--@else-->
+			<ul class="list-zone two margin-top">
+				<li>
+					<a href="{getUrl('', 'mid', $mid, 'category', $qna_category_srl)}" class="link box">
+						<div class="icon-top"><i class="xi-help icon"></i></div>
+						<div class="title text">{lang('$user_lang->userLang20221215143745098')}</div>
+						<div class="desc text">{lang('$user_lang->userLang20221215222350080')}</div>
+					</a>
+				</li>
+				<li>
+					<a href="{getUrl('', 'mid', $mid, 'category', $information_category_srl)}" class="link box">
+						<div class="icon-top"><i class="xi-info icon"></i></div>
+						<div class="title text">{lang('$user_lang->userLang20221103000610084')}</div>
+						<div class="desc text">{lang('$user_lang->userLang20221215223927038')}</div>
+					</a>
+				</li>
+				<li>
+					<a href="{getUrl('', 'mid', $mid, 'category', $review_category_srl)}" class="link box">
+						<div class="icon-top"><i class="xi-message icon"></i></div>
+						<div class="title text">{lang('$user_lang->userLang20221215143855080')}</div>
+						<div class="desc text">{lang('$user_lang->userLang20221215224404001')}</div>
+					</a>
+				</li>
+				<li>
+					<a href="{getUrl('', 'mid', $mid, 'category', $free_category_srl)}" class="link box">
+						<div class="icon-top"><i class="xi-forum icon"></i></div>
+						<div class="title text">{lang('$user_lang->userLang20221103001022039')}</div>
+						<div class="desc text">{lang('$user_lang->userLang20221215224509042')}</div>
+					</a>
+				</li>
+			</ul>
+		<!--@end-->
+	<!--@else-->
+		<include target="./_list_default.html" />
+		<include target="../../../zuser/skins/default/_Pagination.html" />
+	<!--@end-->
+</section>
+
+<include target="../../../zuser/skins/default/_aside.html" />

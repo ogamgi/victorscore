@@ -1,0 +1,13 @@
+.Godo
+.mozilla
+.DS_Store
+LICENSE
+COPYRIGHT
+코어수정.txt
+
+files/
+upload/
+withydb/
+modules/z*/
+*.log
+*.pem

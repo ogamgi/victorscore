@@ -1,0 +1,546 @@
+f{@
+    Context::addHtmlHeader('<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">');
+    $referer_url = getCurrentPageUrl();
+}
+
+<!--@if ($is_logged)-->
+    {@
+        $recommend_member = getModel('zmember')->getRecommendMember($logged_info->member_srl);
+    }
+<!--@end-->
+
+<script>
+    xe.input_box_message = "{lang('zcommon.msg_not_input')}";
+    xe.select_box_message = "{lang('zcommon.msg_not_select')}";
+    xe.check_box_message = "{lang('zcommon.msg_not_select')}";
+    xe.radio_box_message = "{lang('zcommon.msg_not_select')}";
+    xe.email_box_message = "{lang('filter')['invalid_email']}";
+    xe.top_margin = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--size-largest').replace('px', '')) * 2;
+</script>
+
+<load target="../../assets/css/gmarketsans.css" index="0" />
+<load target="../../assets/css/esamanru.css" index="0" />
+<load target="../../assets/css/xeicon.min.css" index="0" />
+<load target="../../assets/css/reset.css" index="0" />
+<load target="../../assets/css/lib/swiper-bundle.min.css" index="0" />
+<load target="../../assets/css/var.css" index="0" />
+<load target="../../assets/css/common.css" index="1" />
+<load target="../../assets/css/layout.score.css" index="2" />
+<load target="../../assets/css/common.query.css" index="3" />
+<load target="../../assets/css/layout.score.query.css" index="4" />
+
+<load target="../../assets/js/lib/swiper-bundle.min.js" />
+<load target="../../assets/js/common.js" />
+
+<header class="header-wrap main">
+    <div class="mainmenu-zone">
+        <div class="center-zone">
+            <ul class="space-between">
+                <li>
+                    <div class="logo">
+                        <a href="{getUrl()}"><img src="../../assets/images/logo.svg" /></a>
+                    </div>
+                    <ul class="menu-area">
+                        <li loop="$global_menu->list => $key1, $value1" cond="$value1['expand'] == 'N'" class="active"|cond="$value1['selected']">
+                            <a href="{$value1['href']}" class="link">{lang($value1['menu_name_key'])}</a>
+                            <div class="arrow"><i class="xi-caret-up"></i></div>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <ul class="link-area">
+                        <li>
+                            <a href="#" onclick="return false;" class="lang-toggle-button">
+                                <h6 class="active"|cond="Context::getLangType() === 'ko'" data-lang_type="ko">KOR</h6>
+                                <div class="separate">/</div>
+                                <h6 class="active"|cond="Context::getLangType() === 'en'" data-lang_type="en">ENG</h6>
+                            </a>
+                        </li>
+                        <li class="separate large"></li>
+                        <!--@if ($is_logged)-->
+                            <li>
+                                <a href="{getUrl('', 'act', 'dispMemberLogout')}" class="link">
+                                    {lang('$user_lang->userLang20221103170542092')}
+                                </a>
+                            </li>
+                            <li class="separate"></li>
+                            <li>
+                                <a href="{getUrl('', 'mid', 'MyIndex')}" class="link font-bold">
+                                    {lang('$user_lang->userLang20221103170709015')}
+                                </a>
+                            </li>
+                            <!--@if ($logged_info->is_admin == 'Y')-->
+                                <li class="separate"></li>
+                                <li>
+                                    <a href="{getUrl('', 'module', 'admin', 'act', 'dispMemberAdminList')}" target="_blank" class="link font-bold color-red">
+                                        {lang('$user_lang->userLang20221106145337006')}
+                                    </a>
+                                </li>
+                            <!--@end-->
+                            <!--@if (array_key_exists(getClass('zcommon')->client_group_srl, $logged_info->group_list))-->
+                                <li class="separate"></li>
+                                <li>
+                                    <a href="{getUrl('', 'mid', 'client')}" target="_blank" class="link font-bold color-red">
+                                        지점 관리
+                                    </a>
+                                </li>
+                            <!--@end-->
+                            <!--@if (array_key_exists(getClass('zcommon')->analyst_group_srl, $logged_info->group_list))-->
+                            <li class="separate"></li>
+                            <li>
+                                <a href="{getUrl('', 'mid', 'manager')}" target="_blank" class="link font-bold color-red">
+                                    게임 관리
+                                </a>
+                            </li>
+                        <!--@end-->
+                        <!--@else-->
+                            <li>
+                                <a href="{getUrl('', 'act', 'dispMemberLoginForm', 'referer', $referer_url)}" class="link font-bold">
+                                    {lang('$user_lang->userLang20221102121118038')}
+                                </a>
+                            </li>
+                            <li class="separate"></li>
+                            <li>
+                                <a href="{getUrl('', 'act', 'dispMemberSignUpForm', 'referer', $referer_url)}" class="link">
+                                    {lang('$user_lang->userLang20221102121157032')}
+                                </a>
+                            </li>
+                        <!--@end-->
+                        <li class="separate large"></li>
+                    </ul>
+                    <a href="#" onclick="return false;" class="pc menu-button" id="AllMenuButton">
+                        <i class="xi-bars"></i>
+                    </a>
+                    <a href="#" onclick="return false;" class="mobile menu-button" id="MobileAllMenuButton">
+                        <i class="xi-bars"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div cond="$config->function !== 'home'" class="submenu-zone">
+        <div class="center-zone">
+            <ul class="space-between">
+                <li>
+                    <ul class="menu-area">
+                        <block loop="$global_menu->list => $key1, $value1" cond="$value1['selected']">
+                            <li>
+                                <a href="{$value1['href']}" class="link">
+                                    <div class="text">{$value1['text']}</div>
+                                </a>
+                            </li>
+                            <li class="separate">
+                                <i class="xi-angle-right"></i>
+                            </li>
+                            {@
+                                $menu_index = 0;
+                            }
+                            <block loop="$value1['list'] => $key2, $value2" cond="$value2['expand'] == 'N'">
+                                {@
+                                    $current_category_srl = '';
+                                    $current_act = '';
+                                }
+                                <!--@if (strpos($value2['href'], 'category') !== false)-->
+                                    {@
+                                        $current_category_srl = explode('category=', $value2['href'])[1];
+                                    }
+                                <!--@elseif (strpos($value2['href'], 'act') !== false)-->
+                                    {@
+                                        $current_act = explode('act=', $value2['href'])[1];
+                                    }
+                                <!--@end-->
+                                <li class="active"|cond="$value2['selected'] || (!empty($current_category_srl) && $current_category_srl == $category) || (!empty($current_act) && $current_act == $act)">
+                                    <a href="{$value2['href']}" class="link">
+                                        <div class="text">{lang($value2['menu_name_key'])}</div>
+                                        <div class="underline"></div>
+                                    </a>
+                                </li>
+                                {@
+                                    $menu_index++;
+                                }
+                            </block>
+                        </block>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="pc allmenu-zone" id="AllMenuZone">
+        <div class="background"></div>
+        <div class="allmenu">
+            <div class="center-zone">
+                <ul class="head space-between">
+                    <li>
+                        <a href="{getUrl()}" class="logo">
+                            <img src="../../assets/images/logo.svg" />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="return false;" class="link huge" id="AllMenuClose">
+                            <i class="xi-close"></i>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="menu">
+                    <li loop="$global_menu->list => $key1, $value1" cond="$value1['expand'] == 'N'">
+                        <div class="main">
+                            <a href="{$value1['href']}" class="link">
+                                <div class="text">{lang($value1['menu_name_key'])}</div>
+                            </a>
+                        </div>
+                        <ul cond="!empty($value1['list'])" class="sub">
+                            <block loop="$value1['list'] => $key2, $value2" cond="$value2['expand'] == 'N'">
+                                {@
+                                    $current_category_srl = '';
+                                    $current_act = '';
+                                }
+                                <!--@if (strpos($value2['href'], 'category') !== false)-->
+                                    {@
+                                        $current_category_srl = explode('category=', $value2['href'])[1];
+                                    }
+                                <!--@elseif (strpos($value2['href'], 'act') !== false)-->
+                                    {@
+                                        $current_act = explode('act=', $value2['href'])[1];
+                                    }
+                                <!--@end-->
+                                <li class="active"|cond="$value2['selected'] || (!empty($current_category_srl) && $current_category_srl == $category) || (!empty($current_act) && $current_act == $act)">
+                                    <a href="{$value2['href']}" class="link">
+                                        <div class="text">{lang($value2['menu_name_key'])}</div>
+                                        <div class="underline"></div>
+                                    </a>
+                                </li>
+                            </block>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="mobile allmenu-zone" id="MobileAllMenuZone">
+        <div class="background"></div>
+        <div class="allmenu">
+            <div class="center-zone">
+                <ul class="head space-between">
+                    <li>
+                        <a href="{getUrl()}" class="logo">
+                            <img src="../../assets/images/logo.svg" />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="return false;" class="link large" id="MobileAllMenuClose">
+                            <i class="xi-close"></i>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="login list-zone">
+                    <li>
+                        <ul>
+                            <!--@if ($is_logged)-->
+                                <li>
+                                    <a href="{getUrl('', 'act', 'dispMemberLogout')}" class="link">
+                                        {lang('$user_lang->userLang20221103170542092')}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{getUrl('', 'mid', 'MyIndex')}" class="link font-bold">
+                                        {lang('$user_lang->userLang20221103170709015')}
+                                    </a>
+                                </li>
+                                <!--@if ($logged_info->is_admin == 'Y')-->
+                                    <li>
+                                        <a href="{getUrl('', 'module', 'admin', 'act', 'dispMemberAdminList')}" target="_blank" class="link font-bold color-red">
+                                            {lang('$user_lang->userLang20221106145337006')}
+                                        </a>
+                                    </li>
+                                <!--@end-->
+                            <!--@else-->
+                                <li>
+                                    <a href="{getUrl('', 'act', 'dispMemberLoginForm', 'referer', $referer_url)}" class="link font-bold">
+                                        {lang('$user_lang->userLang20221102121118038')}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{getUrl('', 'act', 'dispMemberSignUpForm', 'referer', $referer_url)}" class="link">
+                                        {lang('$user_lang->userLang20221102121157032')}
+                                    </a>
+                                </li>
+                            <!--@end-->
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" onclick="return false;" class="lang-toggle-button">
+                            <h6 class="active"|cond="Context::getLangType() === 'ko'" data-lang_type="ko">KOR</h6>
+                            <div class="separate">/</div>
+                            <h6 class="active"|cond="Context::getLangType() === 'en'" data-lang_type="en">ENG</h6>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="menu">
+                    <li loop="$global_menu->list => $key1, $value1" cond="$value1['expand'] == 'N'">
+                        <div class="main">
+                            <a href="{$value1['href']}" class="link">
+                                <div class="text">{lang($value1['menu_name_key'])}</div>
+                            </a>
+                        </div>
+                        <ul cond="!empty($value1['list'])" class="sub">
+                            <block loop="$value1['list'] => $key2, $value2" cond="$value2['expand'] == 'N'">
+                                {@
+                                    $current_category_srl = '';
+                                    $current_act = '';
+                                    $current_product_srl = '';
+                                }
+                                <!--@if (strpos($value2['href'], 'category') !== false)-->
+                                    {@
+                                        $current_category_srl = explode('category=', $value2['href'])[1];
+                                    }
+                                <!--@elseif (strpos($value2['href'], 'act') !== false)-->
+                                    {@
+                                        $current_act = explode('act=', $value2['href'])[1];
+                                    }
+                                <!--@elseif (strpos($value2['href'], 'product_srl') !== false)-->
+                                    {@
+                                        $current_product_srl = explode('product_srl=', $value2['href'])[1];
+                                    }
+                                <!--@end-->
+                                <li class="active"|cond="$value2['selected'] || (!empty($current_category_srl) && $current_category_srl == $category) || (!empty($current_act) && $current_act == $act)">
+                                    <a href="{$value2['href']}" class="link">
+                                        <div class="text">{lang($value2['menu_name_key'])}</div>
+                                        <div class="underline"></div>
+                                    </a>
+                                </li>
+                            </block>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+<main class="<!--@if ($config->function === 'home')-->main-wrap<!--@else-->sub-wrap<!--@end-->">
+    <div class="center-zone">
+        {$content}
+    </div>
+</main>
+<footer class="footer-wrap">
+    <div class="footer-menu">
+        <div class="center-zone">
+            <ul class="space-between">
+                <li>
+                    <ul class="menu-area">
+                        <li loop="$global_menu->list => $key1, $value1" cond="$value1['expand'] == 'N'">
+                            <div class="main">
+                                <a href="{$value1['href']}">
+                                    <div class="text">{lang($value1['menu_name_key'])}</div>
+                                </a>
+                            </div>
+                            <ul cond="!empty($value1['list'])" class="sub">
+                                <li loop="$value1['list'] => $key2, $value2" cond="$value2['expand'] == 'N'">
+                                    <a href="{$value2['href']}">
+                                        {lang($value2['menu_name_key'])}
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li cond="0">
+                            <div class="main">{lang('$user_lang->userLang20221102234207000')}</div>
+                            <ul class="sub">
+                                <li>
+                                    <a href="#" onclick="return false;" target="_blank">{lang('$user_lang->userLang20221102234259072')}</a>
+                                </li>
+                                <li>
+                                    <a href="#" onclick="return false;" target="_blank">{lang('$user_lang->userLang20221102234306041')}</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="https://www.betman.co.kr/" target="_blank" class="ad-banner footer1">
+                        <img src="../../assets/images/banner/betman_large.png" />
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-copy">
+        <div class="center-zone">
+            <ul class="space-between">
+                <li>
+                    <div class="copy-area">© VICTORSCORE 2022</div>
+                </li>
+                <li>
+                    <ul class="link-area">
+                        <li>
+                            <a href="{getUrl('', 'mid', 'Company')}">
+                                {lang('$user_lang->userLang20221102234830022')}
+                            </a>
+                        </li>
+                        <li class="separate"><div></div></li>
+                        <li>
+                            <a href="{getUrl('', 'mid', 'Advertisement')}">
+                                {lang('$user_lang->userLang20221102234845000')}
+                            </a>
+                        </li>
+                        <li class="separate"><div></div></li>
+                        <li>
+                            <a href="{getUrl('', 'mid', 'Terms')}">
+                                {lang('$user_lang->userLang20221102234851020')}
+                            </a>
+                        </li>
+                        <li class="separate"><div></div></li>
+                        <li>
+                            <a href="{getUrl('', 'mid', 'Privacy')}">
+                                {lang('$user_lang->userLang20221102234859080')}
+                            </a>
+                        </li>
+                        <li class="separate"><div></div></li>
+                        <li>
+                            <a href="{getUrl('', 'mid', 'Youth')}">
+                                {lang('$user_lang->userLang20221102234906067')}
+                            </a>
+                        </li>
+                        <li class="separate"><div></div></li>
+                        <li>
+                            <a href="{getUrl('', 'mid', 'Refund')}">
+                                {lang('$user_lang->userLang20230106150353061')}
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="info text">
+                <div>{lang('$user_lang->userLang20230103140329051')}: {lang('$user_lang->userLang20230103140230088')}</div>
+                <div>{lang('$user_lang->userLang20230103140239070')}: 637-81-00567</div>
+                <div>{lang('$user_lang->userLang20230103140352079')}: {lang('$user_lang->userLang20230103140400060')}</div>
+                <div>{lang('krzip.cmd_krzip_address')}: {lang('$user_lang->userLang20230103140453088')}</div>
+                <div>{lang('$user_lang->userLang20230103140410006')}: {lang('$user_lang->userLang20230103140422007')}</div>
+                <div>{lang('phone_number')}: 02-2634-6836</div>
+                <div>{lang('$user_lang->userLang20230103141011070')}: 050-4070-6836</div>
+                <div>{lang('email')}: yeskntl@naver.com</div>
+                <div>{lang('$user_lang->userLang20230103140529016')}: {lang('$user_lang->userLang20230103140520017')}</div>
+            </div>
+        </div>
+    </div>
+</footer>
+<div class="loading-wrap" id="LoadingWrap">
+    <div class="background"></div>
+    <div class="loading-icon">
+        <i class="xi-spinner-5 xi-spin"></i>
+    </div>
+</div>
+<block cond="$mid == 'Home'">
+    <!--// 팝업 -->
+    <div class="popup-wrap" id="PopupWrap">
+        <div class="background"></div>
+        <div class="popup">
+            <div class="contents">
+                <div class="swiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img src="../../assets/images/popup6.png?5" />
+                        </div>
+                    </div>
+                </div>
+                <ul class="bottom space-between">
+                    <li>
+                        <a href="#" onclick="return false;" class="today-close link">
+                            <div class="icon-left"><i class="xi-close-square icon"></i></div>
+                            <div class="text">{lang('$user_lang->userLang20221231220640041')}</div>
+                        </a>
+                    </li>
+                    <li>
+                        <div class="swiper-pagination"></div>
+                    </li>
+                </ul>
+                <a href="#" onclick="return false;" class="popup-close">
+                    <i class="xi-close xi-2x icon"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const popupSwiper = new Swiper('.popup-wrap .swiper', {
+            autoplay: {
+                delay: 5000
+            },
+            pagination: {
+                el: '.popup-wrap .swiper-pagination',
+                clickable: true,
+            },
+        });
+
+        $(document).ready(function() {
+            cookiedata = document.cookie;
+
+            if (cookiedata.indexOf('ncookie_popup=done') < 0) { 
+                document.getElementById('PopupWrap').style.display = 'block';
+            } else {
+                document.getElementById('PopupWrap').style.display = 'none';
+            }
+        });
+
+        $('#PopupWrap .today-close').on('click', function() {
+            todayCloseWin();
+        });
+
+        function setCookie(name, value, expiredays) { 
+            var todayDate = new Date();
+            todayDate.setDate(todayDate.getDate() + expiredays);
+            document.cookie = name + '=' + escape(value) + '; path=/; expires=' + todayDate.toGMTString() + ';';
+        }
+
+        function todayCloseWin() { 
+            setCookie('ncookie_popup', 'done' , 1);
+            document.getElementById('PopupWrap').style.display = 'none';
+        }
+    </script>
+</block>
+
+<script cond="$XE_VALIDATOR_MESSAGE || $ERROR_MSG">
+    $(window).load(function() {
+        var xe_msg = '{$XE_VALIDATOR_MESSAGE}';
+        var error_msg = '{$ERROR_MSG}';
+        var referer_url = '{$REFERER_URL}';
+        
+        setTimeout(function() {
+            if (isEmpty(xe_msg) === true) {
+                alert(error_msg);
+                
+                if (isEmpty(referer_url) === false) {
+                    location.href = referer_url;
+                }
+            } else {
+                alert(xe_msg);
+            }
+        }, 100);
+    });
+</script>
+
+<script>
+    $(window).scroll(function(e) {
+        if ($(this).scrollTop() > 10) {
+            $('.header-wrap').addClass('scroll');
+        } else {
+            $('.header-wrap').removeClass('scroll');
+        }
+    });
+
+    $('#AllMenuButton').on('click', function() {
+        $('#AllMenuZone').slideDown('fast');
+    });
+    $('#AllMenuClose, #AllMenuZone .background').on('click', function() {
+        $('#AllMenuZone').slideUp('fast');
+    });
+
+    $('#MobileAllMenuButton').on('click', function() {
+        $('#MobileAllMenuZone').animate({right: '0px'}, 200);
+        $('#MobileAllMenuZone .background').fadeIn('fast');
+        lockBody();
+    });
+    $('#MobileAllMenuClose').on('click', function() {
+        $('#MobileAllMenuZone').animate({right: '-100%'}, 200);
+        $('#MobileAllMenuZone .background').fadeOut('slow');
+        unlockBody();
+    });
+</script>
